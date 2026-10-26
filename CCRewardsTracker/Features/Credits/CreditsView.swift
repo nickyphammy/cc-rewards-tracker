@@ -166,7 +166,7 @@ private struct SummaryHeader: View {
     }
 
     private var accessibilityText: String {
-        var text = "\(Formatters.money(dashboard.totalAvailable)) available across \(dashboard.availableCount) credits."
+        var text = "\(Formatters.money(dashboard.totalAvailable)) available across \(dashboard.availableCount) \(dashboard.availableCount == 1 ? "credit" : "credits")."
         if dashboard.endingThisMonth > 0 { text += " \(Formatters.money(dashboard.endingThisMonth)) ends this month." }
         return text
     }

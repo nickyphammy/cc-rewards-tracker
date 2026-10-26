@@ -13,7 +13,8 @@ struct AmountField: View {
                 .monospacedDigit()
                 .focused($focused)
                 .onChange(of: text) { old, new in
-                    if !Self.isAllowed(new) { text = old }
+                    let accepted = Self.accept(old: old, new: new)
+                    if accepted != new { text = accepted }
                 }
             if !text.isEmpty {
                 Button("Clear", systemImage: "xmark.circle.fill") { text = "" }
@@ -31,6 +32,13 @@ struct AmountField: View {
                 Button("Done") { focused = false }
             }
         }
+    }
+
+    /// What the field should hold after an edit: the new text with a comma decimal separator
+    /// (the decimal pad in many regions, e.g. vi_VN, de_DE) turned into ".", or the old text if invalid.
+    static func accept(old: String, new: String) -> String {
+        let normalized = new.replacingOccurrences(of: ",", with: ".")
+        return isAllowed(normalized) ? normalized : old.replacingOccurrences(of: ",", with: ".")
     }
 
     static func isAllowed(_ text: String) -> Bool {

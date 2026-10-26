@@ -23,6 +23,7 @@ struct RootView: View {
         .onChange(of: scenePhase) { _, phase in
             if phase == .active { now = .now }
         }
+        .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in now = .now }
     }
 
     /// Credits tab badge: unused credits whose period ends within 7 days (docs/ui/SCREENS.md).

@@ -8,10 +8,11 @@ extension Credit {
                                       openedOn: card?.openedOn, addedAt: card?.addedAt, calendar: calendar)
     }
 
-    /// Usage logged against `period`. Matched by range rather than exact start so a time-zone change
-    /// doesn't orphan past entries.
+    /// Usage logged against `period`. A usage's stored `periodStart` is a local midnight in the time zone
+    /// it was logged in, so after a move it can sit hours either side of this period's start; matching a
+    /// point one day into the stored period keeps it in the right one either way.
     func usages(in period: CreditPeriod) -> [CreditUsage] {
-        (usages ?? []).filter { period.contains($0.periodStart) }.sorted { $0.loggedAt > $1.loggedAt }
+        (usages ?? []).filter { period.contains($0.periodStart.addingTimeInterval(86_400)) }.sorted { $0.loggedAt > $1.loggedAt }
     }
 
     func used(in period: CreditPeriod) -> Decimal {
@@ -27,8 +28,12 @@ extension Credit {
         guard var current = period(containing: now, calendar: calendar) else { return [] }
         let earliest = min(card?.addedAt ?? now, (usages ?? []).map(\.periodStart).min() ?? now)
         var periods = [current]
+        // Step back a full day: in zones that skip midnight on the 1st, a period can start at 01:00,
+        // and one second earlier is still the same period.
         while current.start > earliest,
-              let previous = period(containing: current.start.addingTimeInterval(-1), calendar: calendar) {
+              let dayBefore = calendar.date(byAdding: .day, value: -1, to: current.start),
+              let previous = period(containing: dayBefore, calendar: calendar),
+              previous.start < current.start {
             periods.append(previous)
             current = previous
         }

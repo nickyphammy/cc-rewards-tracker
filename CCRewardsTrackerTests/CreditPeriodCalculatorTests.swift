@@ -165,6 +165,36 @@ struct CreditTrackingTests {
         #expect(credit.used(in: history[2]) == 0)
     }
 
+    @Test func usageStaysInItsPeriodAfterATimeZoneMove() throws {
+        var newYork = Calendar(identifier: .gregorian)
+        newYork.timeZone = TimeZone(identifier: "America/New_York")!
+        var losAngeles = newYork
+        losAngeles.timeZone = TimeZone(identifier: "America/Los_Angeles")!
+        var tokyo = newYork
+        tokyo.timeZone = TimeZone(identifier: "Asia/Tokyo")!
+
+        let credit = try goldDiningCredit()
+        credit.markUsed(now: date(2026, 10, 14, 12, 0), calendar: newYork)
+        let later = date(2026, 10, 20, 12, 0)
+        for calendar in [losAngeles, tokyo] {
+            let october = try #require(credit.period(containing: later, calendar: calendar))
+            #expect(credit.remaining(in: october) == 0, "\(calendar.timeZone.identifier)")
+            let september = try #require(credit.period(containing: date(2026, 9, 20, 12, 0), calendar: calendar))
+            #expect(credit.used(in: september) == 0, "\(calendar.timeZone.identifier)")
+        }
+    }
+
+    /// Asunción skipped midnight on Oct 1, 2023 (DST began at 00:00), so that period starts at 01:00.
+    @Test func historyEndsInAZoneThatSkipsMidnightOnTheFirst() throws {
+        var asuncion = Calendar(identifier: .gregorian)
+        asuncion.timeZone = TimeZone(identifier: "America/Asuncion")!
+        let credit = try goldDiningCredit()
+        credit.card?.addedAt = asuncion.date(from: DateComponents(year: 2023, month: 9, day: 15))!
+        let now = asuncion.date(from: DateComponents(year: 2023, month: 11, day: 15))!
+        let names = credit.history(now: now, calendar: asuncion).map { Formatters.periodName($0, calendar: asuncion) }
+        #expect(names == ["November 2023", "October 2023", "September 2023"])
+    }
+
     @Test func deletingAnEntryRestoresTheAmount() throws {
         let credit = try goldDiningCredit()
         let now = date(2026, 10, 26, 12, 0)

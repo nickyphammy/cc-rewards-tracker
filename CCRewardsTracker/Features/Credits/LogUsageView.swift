@@ -10,6 +10,7 @@ struct LogUsageView: View {
     @State private var date = Date.now
     @State private var note = ""
     @State private var saveFailed = false
+    @State private var savedCount = 0
     @FocusState private var amountFocused: Bool
 
     enum Validation: Equatable { case empty, overRemaining, valid(Decimal) }
@@ -39,7 +40,8 @@ struct LogUsageView: View {
                                 .focused($amountFocused)
                                 .accessibilityLabel("Amount used, dollars")
                                 .onChange(of: amountText) { old, new in
-                                    if !AmountField.isAllowed(new) { amountText = old }
+                                    let accepted = AmountField.accept(old: old, new: new)
+                                    if accepted != new { amountText = accepted }
                                 }
                         }
                     }
@@ -66,7 +68,6 @@ struct LogUsageView: View {
                     if validation == .overRemaining {
                         Text("You have \(Formatters.money(remaining)) left this period.")
                             .foregroundStyle(Color("Urgent"))
-                            .accessibilityAddTraits(.updatesFrequently)
                     }
                 }
 
@@ -92,6 +93,10 @@ struct LogUsageView: View {
                 Button("OK", role: .cancel) {}
             }
             .onAppear { amountFocused = true }
+            .sensoryFeedback(.success, trigger: savedCount)
+            .onChange(of: validation == .overRemaining) { _, over in
+                if over { AccessibilityNotification.Announcement("You have \(Formatters.money(remaining)) left this period.").post() }
+            }
         }
         .presentationDetents([.medium, .large])
     }
@@ -107,6 +112,7 @@ struct LogUsageView: View {
         credit.logUsage(amount, on: date, note: trimmed.isEmpty ? nil : trimmed, calendar: calendar)
         do {
             try credit.modelContext?.save()
+            savedCount += 1
             dismiss()
         } catch {
             saveFailed = true

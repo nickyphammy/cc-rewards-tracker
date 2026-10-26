@@ -13,6 +13,7 @@ struct CreditDetailView: View {
     @State private var logging = DebugLaunch.openLogUsage
     @State private var editingCard: UserCard?
     @State private var showAllHistory = false
+    @State private var markedCount = 0
 
     private static let historyLimit = 12
 
@@ -38,7 +39,7 @@ struct CreditDetailView: View {
                 header(period: period, used: used, canLog: canLog)
             }
 
-            if credit.requiresEnrollment, canLog {
+            if credit.requiresEnrollment, !credit.isArchived {
                 Section {
                     Toggle("I've enrolled", isOn: $credit.isEnrolled)
                 } header: {
@@ -66,10 +67,11 @@ struct CreditDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $logging) { LogUsageView(credit: credit) }
         .sheet(item: $editingCard) { CardEditorView(card: $0) }
-        .sensoryFeedback(trigger: used) { old, new in new > old ? .success : nil }
+        .sensoryFeedback(.success, trigger: markedCount)
         .onChange(of: scenePhase) { _, phase in
             if phase == .active { now = .now }
         }
+        .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in now = .now }
     }
 
     @ViewBuilder private func banners(cardArchived: Bool) -> some View {
@@ -141,7 +143,10 @@ struct CreditDetailView: View {
                 if canLog {
                     if remaining > 0 {
                         Button("Mark as Used") {
-                            withAnimation { _ = credit.markUsed(now: .now, calendar: calendar) }
+                            now = .now
+                            withAnimation {
+                                if credit.markUsed(now: now, calendar: calendar) > 0 { markedCount += 1 }
+                            }
                             try? credit.modelContext?.save()
                         }
                         .primaryActionStyle()
@@ -163,6 +168,18 @@ struct CreditDetailView: View {
         }
         .padding(.vertical, 8)
         .buttonStyle(.borderless)
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel(headerAccessibilityText(period: period, used: used))
+    }
+
+    private func headerAccessibilityText(period: CreditPeriod?, used: Decimal) -> String {
+        let intro = "\(credit.name), \(credit.card?.displayName ?? ""), \(Formatters.period(credit.period, years: credit.periodYears).lowercased())."
+        guard let period else { return intro + " Add your card open date to track this credit." }
+        let remaining = max(credit.amount - used, 0)
+        let state = remaining == 0
+            ? "Used. Available again \(Formatters.day(period.end, now: now, calendar: calendar))."
+            : "\(Formatters.money(remaining)) left of \(Formatters.money(credit.amount)). \(Formatters.ends(period, now: now, calendar: calendar))."
+        return "\(intro) \(state) Current period \(Formatters.span(period, calendar: calendar))."
     }
 
     @ViewBuilder private var history: some View {
@@ -189,7 +206,10 @@ struct CreditDetailView: View {
                     ForEach(credit.usages(in: period)) { usage in
                         UsageRow(usage: usage, now: now)
                             .swipeActions {
-                                Button("Delete", systemImage: "trash", role: .destructive) { delete(usage) }
+                                // An archived credit's history is read-only.
+                                if !credit.isArchived {
+                                    Button("Delete", systemImage: "trash", role: .destructive) { delete(usage) }
+                                }
                             }
                     }
                 }

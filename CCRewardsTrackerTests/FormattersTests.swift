@@ -57,4 +57,12 @@ struct AmountFieldTests {
     func rejected(_ text: String) {
         #expect(!AmountField.isAllowed(text))
     }
+
+    @Test func commaDecimalSeparatorBecomesAPoint() {
+        #expect(AmountField.accept(old: "12", new: "12,") == "12.")
+        #expect(AmountField.accept(old: "12.9", new: "12.95") == "12.95")
+        #expect(AmountField.accept(old: "12,9", new: "12,95") == "12.95")
+        #expect(AmountField.accept(old: "12.9", new: "12.9,") == "12.9")
+        #expect(AmountField.accept(old: "12.95", new: "12.951") == "12.95")
+    }
 }

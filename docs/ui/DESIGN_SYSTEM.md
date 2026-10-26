@@ -205,7 +205,7 @@ Estimates ignore caps (v1 doesn't track spend). If the card has a cap caveat, th
 | `semiannual` | Every 6 months |
 | `annual` | Yearly |
 | `multi_year`, `periodYears` 4 | Every 4 years |
-| `calendar` reset | "Resets Nov 1" |
+| `calendar` reset | "Resets on the 1st of each month", "Resets Jan 1 and Jul 1", "Resets Jan 1" |
 | `cardmember_year` reset | "Resets on your card anniversary (Mar 1)" |
 | Period end within 1 day | "Ends today" / "Ends tomorrow" |
 | Period end within 7 days | "Ends in 5 days" |

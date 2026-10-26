@@ -166,6 +166,6 @@ Simple global preferences live in `UserDefaults` via `@AppStorage`:
 - **Current period** for a credit: computed by `CreditPeriodCalculator` from `period`, `resetBasis`, `openedOn`, and "now". Every period is a block of whole months starting at local midnight on the 1st:
   - `calendar`: aligned to Jan 1 (each month; Jan/Apr/Jul/Oct; Jan/Jul; each year). `multi_year` blocks start Jan 1 of the year the card was opened, or added (`addedAt`) if there's no open date.
   - `cardmember_year`: blocks start on the 1st of the card's open month ("Resets on your card anniversary (Mar 1)" for a card opened Mar 15).
-- **Usage → period:** a `CreditUsage` belongs to the period whose range contains its `periodStart` (a range match, so a time-zone change doesn't orphan entries).
+- **Usage → period:** a `CreditUsage` belongs to the period that contains its `periodStart` + 1 day. `periodStart` is a local midnight in the zone it was logged in, so after a time-zone move it can be hours before or after the current zone's period start; matching a point one day in keeps it in the right period either way.
 - **History** runs from the current period back to the one containing the card's `addedAt` (or the oldest usage, if earlier).
-- **Remaining this period** = `amount − sum(usages where periodStart == currentPeriodStart)`.
+- **Remaining this period** = `amount − sum(usages in the current period)`, never below 0.
