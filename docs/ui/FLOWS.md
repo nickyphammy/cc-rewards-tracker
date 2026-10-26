@@ -98,7 +98,7 @@ Each flow lists its trigger, the steps (**bold** = user action), what the system
 1. A cold launch, or a resume after ≥15 minutes in the background, opens **BC-1**. No network, prompt or animation blocks it.
 2. **Tap Dining** (tap 1) → `.selection` haptic → push **BC-2 "Dining & Restaurants"**. The recommendation is computed synchronously before the push.
 3. The hero shows **Amex Gold · 4x points**, with caveat "4x up to $50,000 a year, then 1x".
-4. **Other Cards** lists the rest: a "Tied for 2nd · all earn 3" group with Freedom Flex 3%, Savor 3%, Sapphire Preferred 3x and Robinhood Gold Card 3%.
+4. **Other Cards** lists the rest: a "Tied for 2nd · all earn 3" group with Capital One Savor 3%, Chase Sapphire Preferred 3x, Chase Freedom Flex 3% and Robinhood Gold Card 3%, in the engine's tie-break order (Savor: category rate in cash back; Freedom Flex: below Sapphire Preferred because of its activation hint; Robinhood: flat rate on everything).
 5. The footer reads: "Ranked by earn rate. 1x points counts the same as 1% cash back…"
 6. *Optional:* **Tap Amount, type 85.40** → every row gains an estimate ("earns ~342 points", "~$2.56 back", "~256 points"). **Tap Done** on the keyboard toolbar.
 7. *Optional:* **tap a card** → **WA-2 Card Detail** (inside the Best Card stack) for its full rates and credits.

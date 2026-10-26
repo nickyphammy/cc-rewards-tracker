@@ -224,13 +224,15 @@ Full-screen / sheets owned by the root: ON-1 Card Picker (first launch), ON-2 Re
 │ OTHER CARDS                            │
 │ ┌────────────────────────────────────┐ │
 │ │ ⊜ Tied for 2nd · all earn 3        │ │  tie group header
-│ │ ▭ Freedom Flex             3%  ›   │ │
+│ │ ▭ Capital One Savor        3%  ›   │ │
 │ │   ~$2.56 back                      │ │
-│ │ ▭ Savor                    3%  ›   │ │
-│ │   ~$2.56 back                      │ │
-│ │ ▭ Sapphire Preferred       3x  ›   │ │
+│ │ ▭ Chase Sapphire Preferred 3x  ›   │ │
 │ │   ~256 points                      │ │
-│ │ ▭ Robinhood Gold Card      3%  ›   │ │
+│ │ ▭ Chase Freedom Flex       3%  ›   │ │
+│ │   ~$2.56 back                      │ │
+│ │   💡 5% this quarter if you        │ │  hint (rule 3: caveats rank lower)
+│ │      activate it                   │ │
+│ │ ▭ Robinhood Gold Card      3%  ›   │ │  base rate only (rule 1)
 │ │   ~$2.56 back                      │ │
 │ └────────────────────────────────────┘ │
 │ Ranked by earn rate. 1x points counts  │  section footer
@@ -1134,4 +1136,4 @@ These were open when the screens were drafted. The product docs now settle them,
 6. **Missing open date:** a cardmember-year credit on a card with no `openedOn` is untracked. It's left out of totals, has no reminders, and the UI prompts for the date ([DATA_MODEL.md](../DATA_MODEL.md)).
 7. **Network:** Apply Update never changes `network`, so WA-8 doesn't list network changes.
 8. **New keys:** `hasSeenWelcome`, `catalogLastCheckedAt` and `catalogLastResult` (`@AppStorage`), plus `UserCard.sortIndex` for manual wallet order.
-9. **Card names:** catalog cards have a `shortName` ("Gold", "Sapphire Reserve") for compact display next to the issuer. `name` is the full marketing name.
+9. **Card names:** catalog cards have a `shortName` ("Gold", "Sapphire Reserve"). The display name is issuer + `shortName` ("Amex Gold"); the tile shows `shortName` under the printed issuer. `name` is the full marketing name. See DESIGN_SYSTEM "Card display name".

@@ -346,5 +346,5 @@ A `Section` at the top of a list with a symbol, a one-line message and an option
 
 - Sentence case for everything except buttons and navigation titles, which use title case ("Add to Wallet").
 - Address the user as "you". Avoid jargon: say "card anniversary", not "cardmember year".
-- Card display name = nickname if set, else the card's `name`. The issuer is shown on the tile and in detail views. Examples in these docs assume catalog names that read well on their own: "Amex Gold", "Sapphire Preferred", "Freedom Flex", "Savor", "Robinhood Gold Card".
+- Card display name = nickname if set, else issuer + `shortName` with American Express shortened to "Amex" ("Amex Gold", "Chase Sapphire Preferred", "Capital One Savor", "Robinhood Gold Card"), else the full `name`. The issuer is always included so same-named cards (Amex Gold vs Robinhood Gold Card) stay distinct. The card tile, which prints the issuer itself, shows only the nickname or `shortName`.
 - Never imply guarantees: "Terms checked Oct 1, 2026", not "Current terms".

@@ -9,6 +9,7 @@ struct BestCardResultView: View {
     @Query(filter: #Predicate<UserCard> { !$0.isArchived }, sort: \UserCard.sortIndex) private var cards: [UserCard]
     @AppStorage("includePortalRates") private var includePortalRates = false
     @State private var amountText = DebugLaunch.amount ?? ""
+    @State private var showingPicker = false
 
     private var amount: Decimal? {
         guard let value = Decimal(string: amountText), value > 0 else { return nil }
@@ -37,6 +38,7 @@ struct BestCardResultView: View {
 
             if others.isEmpty {
                 Section {
+                    Button("Add Cards", systemImage: "plus") { showingPicker = true }
                 } footer: {
                     Text("Add more cards to compare.")
                 }
@@ -65,6 +67,7 @@ struct BestCardResultView: View {
         .navigationTitle(category.displayName)
         .navigationBarTitleDisplayMode(.inline)
         .animation(.default, value: amountText)
+        .sheet(isPresented: $showingPicker) { CardPickerView(mode: .addToWallet) }
     }
 
     private func card(for result: CardRecommendation) -> UserCard? {

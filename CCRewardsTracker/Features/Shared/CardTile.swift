@@ -97,7 +97,7 @@ struct CardTile: View {
 
 extension CardTile {
     init(card: UserCard, size: Size) {
-        self.init(issuer: card.issuer, name: card.displayName, last4: card.last4,
+        self.init(issuer: card.issuer, name: card.tileName, last4: card.last4,
                   colorHex: card.colorHex, size: size, isArchived: card.isArchived)
     }
 }

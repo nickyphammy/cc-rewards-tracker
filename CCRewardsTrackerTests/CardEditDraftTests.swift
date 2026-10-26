@@ -57,6 +57,19 @@ struct CardEditDraftTests {
         #expect(draft.isValid)
     }
 
+    @Test func displayNameIncludesIssuerUnlessNicknamed() throws {
+        let amex = try addCard("amex_gold")
+        let robinhood = try addCard("robinhood_gold_card")
+        let savor = try addCard("capone_savor")
+        #expect(amex.displayName == "Amex Gold")
+        #expect(amex.tileName == "Gold")
+        #expect(robinhood.displayName == "Robinhood Gold Card")
+        #expect(savor.displayName == "Capital One Savor")
+        amex.nickname = "Dining card"
+        #expect(amex.displayName == "Dining card")
+        #expect(amex.tileName == "Dining card")
+    }
+
     @Test func activationIsPerQuarter() throws {
         let card = try addCard("chase_freedom_flex")
         #expect(card.needsActivation(quarter: "2026Q4"))

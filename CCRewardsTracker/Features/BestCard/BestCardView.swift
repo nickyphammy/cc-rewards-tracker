@@ -43,6 +43,10 @@ struct BestCardView: View {
             .task {
                 if path.isEmpty, let category = DebugLaunch.openCategory { path.append(category) }
             }
+            // Archiving or deleting the last card (e.g. from a result's card detail) leaves nothing to rank.
+            .onChange(of: cards.isEmpty) { _, isEmpty in
+                if isEmpty { path = NavigationPath() }
+            }
         }
     }
 

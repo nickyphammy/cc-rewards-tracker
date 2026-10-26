@@ -31,8 +31,16 @@ import SwiftData
 
     init() {}
 
-    /// Name shown in lists: the user's nickname, else the catalog short name, else the full name.
+    /// Name shown in lists and results: the user's nickname, else issuer + short name ("Amex Gold",
+    /// "Robinhood Gold Card"), else the full name. Issuer is included so same-named cards are distinct.
     var displayName: String {
+        if let nickname, !nickname.isEmpty { return nickname }
+        guard let shortName else { return name }
+        return "\(issuer == "American Express" ? "Amex" : issuer) \(shortName)"
+    }
+
+    /// Name printed on the card tile, which already shows the issuer: nickname, else short name.
+    var tileName: String {
         if let nickname, !nickname.isEmpty { return nickname }
         return shortName ?? name
     }
