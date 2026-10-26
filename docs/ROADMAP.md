@@ -19,12 +19,13 @@ Each milestone ends with something runnable on a device/simulator.
 - [x] Card detail screen showing multipliers, bonus-category activation and credits
 
 ## M2 — Best card finder
-- [ ] `RecommendationEngine` + unit tests using the fixtures in [RECOMMENDATION_ENGINE.md](RECOMMENDATION_ENGINE.md)
-- [ ] Category grid → ranked result screen with caveats and runners-up
-- [ ] Optional amount input → "you'd earn ~$X"
-- [ ] Settings: "Include portal bookings" toggle
-- [ ] Category comparison view (one category, all cards)
-- [ ] Rotating & user-selectable categories with per-quarter activation (needed for Tier 1 cards such as Chase Freedom Flex)
+- [x] `RecommendationEngine` + unit tests using the fixtures in [RECOMMENDATION_ENGINE.md](RECOMMENDATION_ENGINE.md)
+- [x] Category grid → ranked result screen with caveats and runners-up
+- [x] Optional amount input → "you'd earn ~$X"
+- [ ] Settings: "Include portal bookings" toggle (engine + `@AppStorage` key done; needs the Settings screen)
+- [x] Category comparison view (one category, all cards): the BC-2 result lists every card
+- [x] Rotating categories with per-quarter activation (Chase Freedom / Freedom Flex)
+- [ ] User-selectable category picker on Card Detail (engine support done; no catalog card uses it yet)
 
 ## M3 — Credits tracker
 - [ ] `CreditPeriodCalculator` (monthly / quarterly / semiannual / annual / multi-year; calendar vs. cardmember year) + tests with pinned dates, incl. month-end and leap-year edges

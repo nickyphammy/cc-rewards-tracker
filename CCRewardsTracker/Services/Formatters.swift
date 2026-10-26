@@ -71,6 +71,14 @@ nonisolated enum Formatters {
         }
     }
 
+    /// "2nd", "3rd".
+    static func ordinal(_ n: Int) -> String {
+        let formatter = NumberFormatter()
+        formatter.locale = locale
+        formatter.numberStyle = .ordinal
+        return formatter.string(from: NSNumber(value: n)) ?? "\(n)"
+    }
+
     /// "Q4 2026" from "2026Q4".
     static func quarter(_ key: String) -> String {
         let parts = key.split(separator: "Q")

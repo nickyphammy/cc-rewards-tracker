@@ -46,3 +46,15 @@ struct FormattersTests {
         #expect(Quarter.key(for: oct, calendar: Calendar(identifier: .gregorian)) == "2026Q4")
     }
 }
+
+struct AmountFieldTests {
+    @Test(arguments: ["", "8", "85.4", "85.40", "999999.99", ".", "0."])
+    func allowed(_ text: String) {
+        #expect(AmountField.isAllowed(text))
+    }
+
+    @Test(arguments: ["85.401", "1.2.3", "abc", "-5", "1000000"])
+    func rejected(_ text: String) {
+        #expect(!AmountField.isAllowed(text))
+    }
+}

@@ -22,10 +22,7 @@ struct RootView: View {
     private var tabs: some View {
         TabView(selection: $selectedTab) {
             Tab("Best Card", systemImage: "creditcard.and.123", value: "bestCard") {
-                NavigationStack {
-                    Text("Best Card")
-                        .navigationTitle("Best Card")
-                }
+                BestCardView()
             }
             Tab("Wallet", systemImage: "wallet.bifold", value: "wallet") {
                 WalletView()
