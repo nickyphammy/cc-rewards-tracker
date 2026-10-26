@@ -1,0 +1,1162 @@
+{
+  "schemaVersion": 1,
+  "catalogVersion": 2026102601,
+  "publishedAt": "2026-10-26T00:00:00Z",
+  "currencies": [
+    {
+      "id": "cash",
+      "name": "Cash Back"
+    },
+    {
+      "id": "amex_mr",
+      "name": "Amex Membership Rewards"
+    },
+    {
+      "id": "chase_ur",
+      "name": "Chase Ultimate Rewards"
+    },
+    {
+      "id": "cap1_miles",
+      "name": "Capital One Miles"
+    },
+    {
+      "id": "citi_typ",
+      "name": "Citi ThankYou Points"
+    },
+    {
+      "id": "bilt_points",
+      "name": "Bilt Points"
+    }
+  ],
+  "cards": [
+    {
+      "id": "robinhood_gold_card",
+      "revision": 1,
+      "issuer": "Robinhood",
+      "name": "Robinhood Gold Card",
+      "network": "visa",
+      "annualFee": 0,
+      "requiredMembership": {
+        "name": "Robinhood Gold",
+        "monthlyFee": 5,
+        "annualFee": 50
+      },
+      "rewardCurrency": "cash",
+      "lastVerified": "2026-10-26",
+      "retired": false,
+      "sources": [
+        "https://robinhood.com/creditcard/",
+        "https://api.robinhood.com/creditcard/legal/reward-terms",
+        "https://robinhood.com/us/en/support/articles/apply-for-robinhood-credit-card/",
+        "https://robinhood.com/us/en/support/articles/gold-overview/",
+        "https://robinhood.com/us/en/gold/"
+      ],
+      "multipliers": [
+        {
+          "category": "other",
+          "rate": 3
+        }
+      ],
+      "credits": []
+    },
+    {
+      "id": "amex_green",
+      "revision": 1,
+      "issuer": "American Express",
+      "name": "American Express Classic Green Card",
+      "network": "amex",
+      "annualFee": 150,
+      "requiredMembership": null,
+      "rewardCurrency": "amex_mr",
+      "lastVerified": "2026-10-26",
+      "retired": true,
+      "sources": [
+        "https://www.americanexpress.com/us/credit-cards/card/green/",
+        "https://thepointsparty.com/articles/amex-classic-green-card-name-change",
+        "https://onemileatatime.com/reviews/credit-cards/american-express/amex-green-card/",
+        "https://frequentmiler.com/amex-green-card-review/",
+        "https://www.doctorofcredit.com/american-express-green-card-name-change-to-class-green-card/"
+      ],
+      "multipliers": [
+        {
+          "category": "dining",
+          "rate": 3
+        },
+        {
+          "category": "flights",
+          "rate": 3
+        },
+        {
+          "category": "hotels",
+          "rate": 3
+        },
+        {
+          "category": "travel_other",
+          "rate": 3
+        },
+        {
+          "category": "transit",
+          "rate": 3
+        },
+        {
+          "category": "other",
+          "rate": 1
+        }
+      ],
+      "credits": [
+        {
+          "id": "clear_plus",
+          "name": "CLEAR+ Credit",
+          "amount": 209,
+          "period": "annual",
+          "resetBasis": "calendar",
+          "requiresEnrollment": false,
+          "notes": "Annual CLEAR+ membership charged to the card. Shared across all cards on the account."
+        }
+      ]
+    },
+    {
+      "id": "amex_gold",
+      "revision": 1,
+      "issuer": "American Express",
+      "name": "American Express Gold Card",
+      "network": "amex",
+      "annualFee": 325,
+      "requiredMembership": null,
+      "rewardCurrency": "amex_mr",
+      "lastVerified": "2026-10-26",
+      "retired": false,
+      "sources": [
+        "https://www.americanexpress.com/us/credit-cards/card-application/apply/supplementary/terms/rose-gold-card/36195-9-0",
+        "https://www.americanexpress.com/en-us/credit-cards/apply/terms/personal/gold-card/25330-10-0",
+        "https://www.americanexpress.com/us/credit-cards/card/gold-card/"
+      ],
+      "multipliers": [
+        {
+          "category": "dining",
+          "rate": 4,
+          "cap": {
+            "amount": 50000,
+            "period": "annual"
+          },
+          "afterCapRate": 1
+        },
+        {
+          "category": "groceries",
+          "rate": 4,
+          "condition": "us_only",
+          "cap": {
+            "amount": 25000,
+            "period": "annual"
+          },
+          "afterCapRate": 1
+        },
+        {
+          "category": "flights",
+          "rate": 3,
+          "condition": "booked_direct_or_portal"
+        },
+        {
+          "category": "hotels",
+          "rate": 5,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "travel_other",
+          "rate": 2,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "other",
+          "rate": 1
+        }
+      ],
+      "credits": [
+        {
+          "id": "dining_credit",
+          "name": "Dining Credit",
+          "amount": 10,
+          "period": "monthly",
+          "resetBasis": "calendar",
+          "requiresEnrollment": true,
+          "notes": "Grubhub (incl. Seamless), Buffalo Wild Wings, Five Guys, The Cheesecake Factory and Wonder."
+        },
+        {
+          "id": "uber_cash",
+          "name": "Uber Cash",
+          "amount": 10,
+          "period": "monthly",
+          "resetBasis": "calendar",
+          "requiresEnrollment": false,
+          "notes": "U.S. Uber rides, Uber Eats and Postmates. Add the card to your Uber account; unused balance expires monthly."
+        },
+        {
+          "id": "resy",
+          "name": "Resy Credit",
+          "amount": 50,
+          "period": "semiannual",
+          "resetBasis": "calendar",
+          "requiresEnrollment": true,
+          "notes": "Jan-Jun and Jul-Dec. Qualifying U.S. Resy restaurants and Resy Pay. Tock also qualifies from Sep 15, 2026."
+        },
+        {
+          "id": "dunkin",
+          "name": "Dunkin' Credit",
+          "amount": 7,
+          "period": "monthly",
+          "resetBasis": "calendar",
+          "requiresEnrollment": true,
+          "notes": "U.S. Dunkin' locations, purchased directly with Dunkin'."
+        }
+      ]
+    },
+    {
+      "id": "amex_blue_cash_everyday",
+      "revision": 1,
+      "issuer": "American Express",
+      "name": "Blue Cash Everyday Card from American Express",
+      "network": "amex",
+      "annualFee": 0,
+      "requiredMembership": null,
+      "rewardCurrency": "cash",
+      "lastVerified": "2026-10-26",
+      "retired": false,
+      "sources": [
+        "https://www.americanexpress.com/us/credit-cards/card-application/apply/prospect/terms/blue-cash-everyday-credit-card/91191-10-0/"
+      ],
+      "multipliers": [
+        {
+          "category": "groceries",
+          "rate": 3,
+          "condition": "us_only",
+          "cap": {
+            "amount": 6000,
+            "period": "annual"
+          },
+          "afterCapRate": 1
+        },
+        {
+          "category": "online_retail",
+          "rate": 3,
+          "condition": "us_only",
+          "cap": {
+            "amount": 6000,
+            "period": "annual"
+          },
+          "afterCapRate": 1
+        },
+        {
+          "category": "gas",
+          "rate": 3,
+          "condition": "us_only",
+          "cap": {
+            "amount": 6000,
+            "period": "annual"
+          },
+          "afterCapRate": 1
+        },
+        {
+          "category": "other",
+          "rate": 1
+        }
+      ],
+      "credits": [
+        {
+          "id": "disney_streaming",
+          "name": "Disney Streaming Credit",
+          "amount": 7,
+          "period": "monthly",
+          "resetBasis": "calendar",
+          "requiresEnrollment": true,
+          "notes": "DisneyPlus.com, Hulu.com or Stream.ESPN.com (U.S. sites). An annual plan earns only one $7 credit, in the month of purchase."
+        },
+        {
+          "id": "home_chef",
+          "name": "Home Chef Credit",
+          "amount": 15,
+          "period": "monthly",
+          "resetBasis": "calendar",
+          "requiresEnrollment": true,
+          "notes": "Home Chef subscription bought online at homechef.com/blue-cash-everyday. 48 contiguous states and D.C. only."
+        }
+      ]
+    },
+    {
+      "id": "amex_blue_cash_preferred",
+      "revision": 1,
+      "issuer": "American Express",
+      "name": "Blue Cash Preferred Card from American Express",
+      "network": "amex",
+      "annualFee": 95,
+      "requiredMembership": null,
+      "rewardCurrency": "cash",
+      "lastVerified": "2026-10-26",
+      "retired": false,
+      "sources": [
+        "https://www.americanexpress.com/us/credit-cards/card-application/apply/supplementary/terms/blue-cash-preferred-credit-card/36195-9-0",
+        "https://www.americanexpress.com/us/credit-cards/card/blue-cash-preferred/",
+        "https://www.nerdwallet.com/credit-cards/reviews/american-express-blue-cash-preferred"
+      ],
+      "multipliers": [
+        {
+          "category": "groceries",
+          "rate": 6,
+          "condition": "us_only",
+          "cap": {
+            "amount": 6000,
+            "period": "annual"
+          },
+          "afterCapRate": 1
+        },
+        {
+          "category": "streaming",
+          "rate": 6,
+          "condition": "us_only"
+        },
+        {
+          "category": "transit",
+          "rate": 3
+        },
+        {
+          "category": "gas",
+          "rate": 3,
+          "condition": "us_only"
+        },
+        {
+          "category": "other",
+          "rate": 1
+        }
+      ],
+      "credits": [
+        {
+          "id": "disney_streaming",
+          "name": "Disney Streaming Credit",
+          "amount": 10,
+          "period": "monthly",
+          "resetBasis": "calendar",
+          "requiresEnrollment": true,
+          "notes": "DisneyPlus.com, Hulu.com or Stream.ESPN.com (U.S. sites). An annual plan earns only one $10 credit, in the month of purchase."
+        }
+      ]
+    },
+    {
+      "id": "amex_platinum",
+      "revision": 1,
+      "issuer": "American Express",
+      "name": "The Platinum Card from American Express",
+      "network": "amex",
+      "annualFee": 895,
+      "requiredMembership": null,
+      "rewardCurrency": "amex_mr",
+      "lastVerified": "2026-10-26",
+      "retired": false,
+      "sources": [
+        "https://www.americanexpress.com/us/credit-cards/card-application/apply/supplementary/terms/platinum-card/38171-9-0",
+        "https://www.americanexpress.com/us/credit-cards/card/platinum/",
+        "https://upgradedpoints.com/credit-cards/reviews/american-express-platinum-card/benefits/"
+      ],
+      "multipliers": [
+        {
+          "category": "flights",
+          "rate": 5,
+          "condition": "booked_direct_or_portal",
+          "cap": {
+            "amount": 500000,
+            "period": "annual"
+          },
+          "afterCapRate": 1
+        },
+        {
+          "category": "hotels",
+          "rate": 5,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "other",
+          "rate": 1
+        }
+      ],
+      "credits": [
+        {
+          "id": "hotel_credit",
+          "name": "Hotel Credit (FHR / The Hotel Collection)",
+          "amount": 300,
+          "period": "semiannual",
+          "resetBasis": "calendar",
+          "requiresEnrollment": false,
+          "notes": "Jan-Jun and Jul-Dec. Prepaid Fine Hotels + Resorts or The Hotel Collection bookings (and prepaid Airbnb Luxe) via American Express Travel. The Hotel Collection and Airbnb Luxe need 2+ nights; FHR needs 2+ nights from Jan 1, 2027."
+        },
+        {
+          "id": "uber_cash",
+          "name": "Uber Cash",
+          "amount": 15,
+          "period": "monthly",
+          "resetBasis": "calendar",
+          "requiresEnrollment": false,
+          "notes": "Plus an extra $20 in December ($35 total). U.S. Uber rides, Uber Eats and Postmates. Add the card to your Uber account; unused balance expires monthly."
+        },
+        {
+          "id": "uber_one",
+          "name": "Uber One Credit",
+          "amount": 120,
+          "period": "annual",
+          "resetBasis": "calendar",
+          "requiresEnrollment": false,
+          "notes": "Auto-renewing U.S. Uber One membership charged to the card."
+        },
+        {
+          "id": "airline_fee",
+          "name": "Airline Fee Credit",
+          "amount": 200,
+          "period": "annual",
+          "resetBasis": "calendar",
+          "requiresEnrollment": true,
+          "notes": "Incidental fees on one selected airline: Alaska, American, Delta, JetBlue, Southwest or United. Not tickets, upgrades or miles."
+        },
+        {
+          "id": "clear_plus",
+          "name": "CLEAR+ Credit",
+          "amount": 219,
+          "period": "annual",
+          "resetBasis": "calendar",
+          "requiresEnrollment": false,
+          "notes": "CLEAR+ membership charged to the card. Shared across all cards on the account."
+        },
+        {
+          "id": "digital_entertainment",
+          "name": "Digital Entertainment Credit",
+          "amount": 25,
+          "period": "monthly",
+          "resetBasis": "calendar",
+          "requiresEnrollment": true,
+          "notes": "Purchased directly from Disney+, ESPN streaming, Hulu, The New York Times, Paramount+, Peacock, The Wall Street Journal, YouTube Premium, YouTube TV or YouTube Music."
+        },
+        {
+          "id": "resy",
+          "name": "Resy Credit",
+          "amount": 100,
+          "period": "quarterly",
+          "resetBasis": "calendar",
+          "requiresEnrollment": true,
+          "notes": "Qualifying U.S. Resy restaurants and Resy Pay. Tock (exploretock.com and the Tock app) also qualifies from Sep 15, 2026."
+        },
+        {
+          "id": "lululemon",
+          "name": "lululemon Credit",
+          "amount": 75,
+          "period": "quarterly",
+          "resetBasis": "calendar",
+          "requiresEnrollment": true,
+          "notes": "U.S. lululemon stores, lululemon.com and the app. Outlets excluded."
+        },
+        {
+          "id": "equinox",
+          "name": "Equinox Credit",
+          "amount": 300,
+          "period": "annual",
+          "resetBasis": "calendar",
+          "requiresEnrollment": true,
+          "notes": "U.S. Equinox club membership or Equinox+ subscription purchased directly from Equinox. Not in-app or third-party purchases."
+        },
+        {
+          "id": "oura",
+          "name": "Oura Ring Credit",
+          "amount": 200,
+          "period": "annual",
+          "resetBasis": "calendar",
+          "requiresEnrollment": true,
+          "notes": "Oura Ring purchases at ouraring.com (U.S.). Not the membership subscription."
+        },
+        {
+          "id": "walmart_plus",
+          "name": "Walmart+ Credit",
+          "amount": 12.95,
+          "period": "monthly",
+          "resetBasis": "calendar",
+          "requiresEnrollment": false,
+          "notes": "One monthly Walmart+ membership fee charged to the card, plus applicable taxes. Annual Walmart+ plans do not qualify."
+        },
+        {
+          "id": "airbnb_experiences",
+          "name": "Airbnb Experiences Credit",
+          "amount": 250,
+          "period": "annual",
+          "resetBasis": "calendar",
+          "requiresEnrollment": false,
+          "notes": "Unlocks after a prepaid Airbnb Luxe booking via American Express Travel. Then usable on Airbnb Experiences bought directly from Airbnb."
+        },
+        {
+          "id": "global_entry_tsa",
+          "name": "Global Entry / TSA PreCheck Credit",
+          "amount": 120,
+          "period": "multi_year",
+          "periodYears": 4,
+          "resetBasis": "calendar",
+          "requiresEnrollment": false,
+          "notes": "Up to $120 for Global Entry or up to $85 for TSA PreCheck, once every 4 years. The 4 years run from the last credit, not by calendar."
+        }
+      ]
+    },
+    {
+      "id": "chase_freedom_flex",
+      "revision": 1,
+      "issuer": "Chase",
+      "name": "Chase Freedom Flex",
+      "network": "mastercard",
+      "annualFee": 0,
+      "requiredMembership": null,
+      "rewardCurrency": "chase_ur",
+      "lastVerified": "2026-10-26",
+      "retired": false,
+      "sources": [
+        "https://creditcards.chase.com/cash-back-credit-cards/freedom/flex",
+        "https://creditcards.chase.com/mastercard-credit-cards",
+        "https://frequentmiler.com/?p=295779",
+        "https://travel-on-points.com/chase-freedom-flex-refresh/"
+      ],
+      "multipliers": [
+        {
+          "rate": 5,
+          "rotating": {
+            "quarters": {
+              "2026Q4": [
+                "groceries",
+                "dining"
+              ],
+              "2027Q1": [
+                "groceries",
+                "streaming"
+              ]
+            }
+          },
+          "condition": "requires_activation",
+          "cap": {
+            "amount": 1500,
+            "period": "quarterly"
+          },
+          "afterCapRate": 1
+        },
+        {
+          "category": "flights",
+          "rate": 5,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "hotels",
+          "rate": 5,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "travel_other",
+          "rate": 5,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "dining",
+          "rate": 3
+        },
+        {
+          "category": "drugstores",
+          "rate": 3
+        },
+        {
+          "category": "transit",
+          "rate": 2,
+          "condition": "brand_only",
+          "brand": "Lyft"
+        },
+        {
+          "category": "other",
+          "rate": 1
+        }
+      ],
+      "credits": []
+    },
+    {
+      "id": "chase_freedom_unlimited",
+      "revision": 1,
+      "issuer": "Chase",
+      "name": "Chase Freedom Unlimited",
+      "network": "visa",
+      "annualFee": 0,
+      "requiredMembership": null,
+      "rewardCurrency": "chase_ur",
+      "lastVerified": "2026-10-26",
+      "retired": false,
+      "sources": [
+        "https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited",
+        "https://creditcards.chase.com/visa-credit-cards"
+      ],
+      "multipliers": [
+        {
+          "category": "flights",
+          "rate": 5,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "hotels",
+          "rate": 5,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "travel_other",
+          "rate": 5,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "dining",
+          "rate": 3
+        },
+        {
+          "category": "drugstores",
+          "rate": 3
+        },
+        {
+          "category": "transit",
+          "rate": 2,
+          "condition": "brand_only",
+          "brand": "Lyft"
+        },
+        {
+          "category": "other",
+          "rate": 1.5
+        }
+      ],
+      "credits": []
+    },
+    {
+      "id": "chase_sapphire_preferred",
+      "revision": 1,
+      "issuer": "Chase",
+      "name": "Chase Sapphire Preferred",
+      "network": "visa",
+      "annualFee": 95,
+      "requiredMembership": null,
+      "rewardCurrency": "chase_ur",
+      "lastVerified": "2026-10-26",
+      "retired": false,
+      "sources": [
+        "https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred",
+        "https://media.chase.com/news/Meet-the-New-Chase-Sapphire-Preferred",
+        "https://www.chase.com/RewardsCategoryFAQs",
+        "https://creditcards.chase.com/visa-credit-cards"
+      ],
+      "multipliers": [
+        {
+          "category": "flights",
+          "rate": 5,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "hotels",
+          "rate": 5,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "travel_other",
+          "rate": 5,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "flights",
+          "rate": 2
+        },
+        {
+          "category": "hotels",
+          "rate": 2
+        },
+        {
+          "category": "travel_other",
+          "rate": 2
+        },
+        {
+          "category": "transit",
+          "rate": 2
+        },
+        {
+          "category": "transit",
+          "rate": 5,
+          "condition": "brand_only",
+          "brand": "Lyft"
+        },
+        {
+          "category": "hotels",
+          "rate": 3,
+          "condition": "brand_only",
+          "brand": "Airbnb"
+        },
+        {
+          "category": "hotels",
+          "rate": 3,
+          "condition": "brand_only",
+          "brand": "Vrbo"
+        },
+        {
+          "category": "hotels",
+          "rate": 3,
+          "condition": "brand_only",
+          "brand": "Plum Guide"
+        },
+        {
+          "category": "hotels",
+          "rate": 3,
+          "condition": "brand_only",
+          "brand": "HomeAway"
+        },
+        {
+          "category": "hotels",
+          "rate": 3,
+          "condition": "brand_only",
+          "brand": "Homestay.com"
+        },
+        {
+          "category": "hotels",
+          "rate": 3,
+          "condition": "brand_only",
+          "brand": "Vacasa"
+        },
+        {
+          "category": "dining",
+          "rate": 3
+        },
+        {
+          "category": "gas",
+          "rate": 3
+        },
+        {
+          "category": "ev_charging",
+          "rate": 3
+        },
+        {
+          "category": "streaming",
+          "rate": 3
+        },
+        {
+          "category": "other",
+          "rate": 1
+        }
+      ],
+      "credits": [
+        {
+          "id": "chase_travel_hotel_credit",
+          "name": "Chase Travel Hotel Credit",
+          "amount": 100,
+          "period": "annual",
+          "resetBasis": "cardmember_year",
+          "requiresEnrollment": false,
+          "notes": "Up to $100 per account anniversary year, applied automatically to hotel stays purchased through Chase Travel. Raised from $50 on 6/15/2026."
+        },
+        {
+          "id": "global_entry_credit",
+          "name": "Global Entry / TSA PreCheck / NEXUS Credit",
+          "amount": 120,
+          "period": "multi_year",
+          "periodYears": 4,
+          "resetBasis": "cardmember_year",
+          "requiresEnrollment": false,
+          "notes": "Up to $120 every four years for the application fee charged directly with DHS or eligible providers. Added 6/15/2026."
+        }
+      ]
+    },
+    {
+      "id": "chase_sapphire_reserve",
+      "revision": 1,
+      "issuer": "Chase",
+      "name": "Chase Sapphire Reserve",
+      "network": "visa",
+      "annualFee": 795,
+      "requiredMembership": null,
+      "rewardCurrency": "chase_ur",
+      "lastVerified": "2026-10-26",
+      "retired": false,
+      "sources": [
+        "https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve",
+        "https://creditcards.chase.com/visa-credit-cards"
+      ],
+      "multipliers": [
+        {
+          "category": "flights",
+          "rate": 8,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "hotels",
+          "rate": 8,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "travel_other",
+          "rate": 8,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "flights",
+          "rate": 4,
+          "condition": "booked_direct_or_portal"
+        },
+        {
+          "category": "hotels",
+          "rate": 4,
+          "condition": "booked_direct_or_portal"
+        },
+        {
+          "category": "dining",
+          "rate": 3
+        },
+        {
+          "category": "transit",
+          "rate": 5,
+          "condition": "brand_only",
+          "brand": "Lyft"
+        },
+        {
+          "category": "other",
+          "rate": 1
+        }
+      ],
+      "credits": [
+        {
+          "id": "travel_credit",
+          "name": "Annual Travel Credit",
+          "amount": 300,
+          "period": "annual",
+          "resetBasis": "cardmember_year",
+          "requiresEnrollment": false,
+          "notes": "Applied automatically to purchases in the travel category. Year begins with the account open date. Purchases covered by the credit earn no points."
+        },
+        {
+          "id": "the_edit_credit",
+          "name": "The Edit Hotel Credit",
+          "amount": 500,
+          "period": "annual",
+          "resetBasis": "calendar",
+          "requiresEnrollment": false,
+          "notes": "Up to $250 per prepaid (Pay Now) stay of 2+ nights booked through The Edit by Chase Travel; max $500 per calendar year."
+        },
+        {
+          "id": "dining_credit",
+          "name": "Sapphire Reserve Exclusive Tables Dining Credit",
+          "amount": 150,
+          "period": "semiannual",
+          "resetBasis": "calendar",
+          "requiresEnrollment": false,
+          "notes": "Up to $150 Jan-Jun and $150 Jul-Dec at restaurants in OpenTable's Sapphire Reserve Exclusive Tables program. Third-party payment processors and delivery platforms excluded."
+        },
+        {
+          "id": "stubhub_credit",
+          "name": "StubHub Credit",
+          "amount": 150,
+          "period": "semiannual",
+          "resetBasis": "calendar",
+          "requiresEnrollment": true,
+          "notes": "Up to $150 Jan-Jun and $150 Jul-Dec on StubHub and viagogo (excluding gift cards). One-time activation required. Through 12/31/2027."
+        },
+        {
+          "id": "lyft_credit",
+          "name": "Lyft Credit",
+          "amount": 10,
+          "period": "monthly",
+          "resetBasis": "calendar",
+          "requiresEnrollment": false,
+          "notes": "$10 per calendar month in Lyft app rides; card must be set as Lyft payment method. Unused credit does not roll over. Through 9/30/2027."
+        },
+        {
+          "id": "peloton_credit",
+          "name": "Peloton Membership Credit",
+          "amount": 10,
+          "period": "monthly",
+          "resetBasis": "calendar",
+          "requiresEnrollment": true,
+          "notes": "Up to $10/month (max $120/calendar year) on eligible Peloton memberships. Activation via Peloton's Chase promotion page required; app-store purchases excluded. Through 12/31/2027."
+        },
+        {
+          "id": "global_entry_credit",
+          "name": "Global Entry / TSA PreCheck / NEXUS Credit",
+          "amount": 120,
+          "period": "multi_year",
+          "periodYears": 4,
+          "resetBasis": "cardmember_year",
+          "requiresEnrollment": false,
+          "notes": "One statement credit up to $120 every four years for the application fee, charged directly with DHS/CBP or authorized enrollment providers. Four-year cycle runs from the credited charge."
+        },
+        {
+          "id": "shops_at_chase_credit",
+          "name": "The Shops at Chase Credit",
+          "amount": 250,
+          "period": "annual",
+          "resetBasis": "calendar",
+          "requiresEnrollment": false,
+          "notes": "Spend-gated: only unlocked after $75,000 in purchases in a calendar year. Up to $250 at The Shops at Chase."
+        },
+        {
+          "id": "southwest_chase_travel_credit",
+          "name": "Southwest Chase Travel Credit",
+          "amount": 500,
+          "period": "annual",
+          "resetBasis": "calendar",
+          "requiresEnrollment": false,
+          "notes": "Spend-gated: only unlocked after $75,000 in purchases in a calendar year. Up to $500 on Southwest purchases made through Chase Travel."
+        }
+      ]
+    },
+    {
+      "id": "capone_quicksilver",
+      "revision": 1,
+      "issuer": "Capital One",
+      "name": "Capital One Quicksilver Rewards",
+      "network": "discover",
+      "annualFee": 0,
+      "requiredMembership": null,
+      "rewardCurrency": "cash",
+      "lastVerified": "2026-10-26",
+      "retired": false,
+      "sources": [
+        "https://www.capitalone.com/credit-cards/quicksilver/",
+        "https://www.capitalone.com/credit-cards/cash-back/",
+        "https://www.capitalone.com/learn-grow/money-management/quicksilver-card-benefits/",
+        "https://www.capitalone.com/learn-grow/money-management/ventureone-vs-quicksilver/",
+        "https://www.paymentsjournal.com/capital-one-starts-migrating-core-cards-to-discover-network/"
+      ],
+      "multipliers": [
+        {
+          "category": "hotels",
+          "rate": 5,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "travel_other",
+          "rate": 5,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "entertainment",
+          "rate": 5,
+          "condition": "brand_only",
+          "brand": "Capital One Entertainment"
+        },
+        {
+          "category": "other",
+          "rate": 1.5
+        }
+      ],
+      "credits": []
+    },
+    {
+      "id": "capone_savor",
+      "revision": 1,
+      "issuer": "Capital One",
+      "name": "Capital One Savor Rewards",
+      "network": "discover",
+      "annualFee": 0,
+      "requiredMembership": null,
+      "rewardCurrency": "cash",
+      "lastVerified": "2026-10-26",
+      "retired": false,
+      "sources": [
+        "https://www.capitalone.com/credit-cards/savor/",
+        "https://www.capitalone.com/learn-grow/money-management/everything-about-savor/",
+        "https://www.capitalone.com/credit-cards/benefits/entertainment/",
+        "https://www.paymentsjournal.com/capital-one-starts-migrating-core-cards-to-discover-network/"
+      ],
+      "multipliers": [
+        {
+          "category": "dining",
+          "rate": 3
+        },
+        {
+          "category": "groceries",
+          "rate": 3
+        },
+        {
+          "category": "entertainment",
+          "rate": 3
+        },
+        {
+          "category": "streaming",
+          "rate": 3
+        },
+        {
+          "category": "entertainment",
+          "rate": 8,
+          "condition": "brand_only",
+          "brand": "Capital One Entertainment"
+        },
+        {
+          "category": "hotels",
+          "rate": 5,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "travel_other",
+          "rate": 5,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "other",
+          "rate": 1
+        }
+      ],
+      "credits": []
+    },
+    {
+      "id": "capone_venture",
+      "revision": 1,
+      "issuer": "Capital One",
+      "name": "Capital One Venture Rewards",
+      "network": "discover",
+      "annualFee": 95,
+      "requiredMembership": null,
+      "rewardCurrency": "cap1_miles",
+      "lastVerified": "2026-10-26",
+      "retired": false,
+      "sources": [
+        "https://www.capitalone.com/credit-cards/venture/",
+        "https://www.capitalone.com/learn-grow/money-management/all-about-venture/",
+        "https://www.capitalone.com/credit-cards/benefits/entertainment/",
+        "https://www.capitalone.com/credit-cards/disclosures/additional-benefit-terms/",
+        "https://www.doctorofcredit.com/is-capital-one-moving-their-credit-cards-to-discover-network/"
+      ],
+      "multipliers": [
+        {
+          "category": "hotels",
+          "rate": 5,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "travel_other",
+          "rate": 5,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "entertainment",
+          "rate": 5,
+          "condition": "brand_only",
+          "brand": "Capital One Entertainment"
+        },
+        {
+          "category": "other",
+          "rate": 2
+        }
+      ],
+      "credits": [
+        {
+          "id": "global_entry_tsa_precheck",
+          "name": "Global Entry / TSA PreCheck Credit",
+          "amount": 120,
+          "period": "multi_year",
+          "periodYears": 4,
+          "resetBasis": "cardmember_year",
+          "requiresEnrollment": false,
+          "notes": "Up to $120 (matches the application fee paid) for Global Entry or TSA PreCheck. One statement credit per account every 4 years, counted from when the credit is used."
+        }
+      ]
+    },
+    {
+      "id": "capone_venture_x",
+      "revision": 1,
+      "issuer": "Capital One",
+      "name": "Capital One Venture X Rewards",
+      "network": "visa",
+      "annualFee": 395,
+      "requiredMembership": null,
+      "rewardCurrency": "cap1_miles",
+      "lastVerified": "2026-10-26",
+      "retired": false,
+      "sources": [
+        "https://www.capitalone.com/credit-cards/venture-x/",
+        "https://www.capitalone.com/credit-cards/travel-and-miles/",
+        "https://www.capitalone.com/learn-grow/more-than-money/all-about-venture-x/",
+        "https://www.capitalone.com/credit-cards/benefits/entertainment/",
+        "https://www.capitalone.com/credit-cards/disclosures/additional-benefit-terms/"
+      ],
+      "multipliers": [
+        {
+          "category": "hotels",
+          "rate": 10,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "travel_other",
+          "rate": 10,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "flights",
+          "rate": 5,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "entertainment",
+          "rate": 5,
+          "condition": "brand_only",
+          "brand": "Capital One Entertainment"
+        },
+        {
+          "category": "other",
+          "rate": 2
+        }
+      ],
+      "credits": [
+        {
+          "id": "travel_credit",
+          "name": "Capital One Travel Credit",
+          "amount": 300,
+          "period": "annual",
+          "resetBasis": "cardmember_year",
+          "requiresEnrollment": false,
+          "notes": "Bookings through Capital One Travel only; applied at checkout. Expires on the next account anniversary; does not roll over."
+        },
+        {
+          "id": "global_entry_tsa_precheck",
+          "name": "Global Entry / TSA PreCheck Credit",
+          "amount": 120,
+          "period": "multi_year",
+          "periodYears": 4,
+          "resetBasis": "cardmember_year",
+          "requiresEnrollment": false,
+          "notes": "Up to $120 (matches the application fee paid) for Global Entry or TSA PreCheck. One statement credit per account every 4 years, counted from when the credit is used."
+        }
+      ]
+    },
+    {
+      "id": "capone_ventureone",
+      "revision": 1,
+      "issuer": "Capital One",
+      "name": "Capital One VentureOne Rewards",
+      "network": "discover",
+      "annualFee": 0,
+      "requiredMembership": null,
+      "rewardCurrency": "cap1_miles",
+      "lastVerified": "2026-10-26",
+      "retired": false,
+      "sources": [
+        "https://www.capitalone.com/credit-cards/ventureone/",
+        "https://www.capitalone.com/learn-grow/money-management/ventureone-vs-quicksilver/",
+        "https://www.paymentsjournal.com/capital-one-starts-migrating-core-cards-to-discover-network/"
+      ],
+      "multipliers": [
+        {
+          "category": "hotels",
+          "rate": 5,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "travel_other",
+          "rate": 5,
+          "condition": "booked_via_portal"
+        },
+        {
+          "category": "entertainment",
+          "rate": 5,
+          "condition": "brand_only",
+          "brand": "Capital One Entertainment"
+        },
+        {
+          "category": "other",
+          "rate": 1.25
+        }
+      ],
+      "credits": []
+    }
+  ]
+}
