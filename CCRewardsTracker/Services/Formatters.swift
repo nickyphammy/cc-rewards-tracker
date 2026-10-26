@@ -86,6 +86,84 @@ nonisolated enum Formatters {
         return "Q\(parts[1]) \(parts[0])"
     }
 
+    // MARK: Credit periods (docs/ui/DESIGN_SYSTEM.md "Periods and dates")
+
+    /// "Ends today", "Ends tomorrow", "Ends in 5 days", else "Ends Dec 31" (year added if not this year).
+    static func ends(_ period: CreditPeriod, now: Date, calendar: Calendar) -> String {
+        switch CreditPeriodCalculator.daysLeft(in: period, now: now, calendar: calendar) {
+        case ...0: "Ends today"
+        case 1: "Ends tomorrow"
+        case let days where days <= 7: "Ends in \(days) days"
+        default: "Ends \(day(CreditPeriodCalculator.lastDay(of: period, calendar: calendar), now: now, calendar: calendar))"
+        }
+    }
+
+    /// "Nov 1", or "Feb 28, 2027" when not in `now`'s year.
+    static func day(_ date: Date, now: Date, calendar: Calendar) -> String {
+        let sameYear = calendar.component(.year, from: date) == calendar.component(.year, from: now)
+        let style = dateStyle(calendar).month(.abbreviated).day()
+        return date.formatted(sameYear ? style : style.year())
+    }
+
+    /// "Oct 1 – Oct 31, 2026", or "Mar 1, 2026 – Feb 28, 2027" across years.
+    static func span(_ period: CreditPeriod, calendar: Calendar) -> String {
+        let last = CreditPeriodCalculator.lastDay(of: period, calendar: calendar)
+        let monthDay = dateStyle(calendar).month(.abbreviated).day()
+        let full = monthDay.year()
+        if calendar.component(.year, from: period.start) == calendar.component(.year, from: last) {
+            return "\(period.start.formatted(monthDay)) – \(last.formatted(full))"
+        }
+        return "\(period.start.formatted(full)) – \(last.formatted(full))"
+    }
+
+    /// History heading: "October 2026", "2026", "Jul – Dec 2026", "Mar 2026 – Feb 2027", "2024 – 2027".
+    static func periodName(_ period: CreditPeriod, calendar: Calendar) -> String {
+        let last = CreditPeriodCalculator.lastDay(of: period, calendar: calendar)
+        let (startYear, endYear) = (calendar.component(.year, from: period.start), calendar.component(.year, from: last))
+        let (startMonth, endMonth) = (calendar.component(.month, from: period.start), calendar.component(.month, from: last))
+        let month = dateStyle(calendar).month(.abbreviated)
+        if startYear == endYear && startMonth == endMonth {
+            return period.start.formatted(dateStyle(calendar).month(.wide).year())
+        }
+        if startMonth == 1 && endMonth == 12 {
+            return startYear == endYear ? "\(startYear)" : "\(startYear) – \(endYear)"
+        }
+        if startYear == endYear {
+            return "\(period.start.formatted(month)) – \(last.formatted(month)) \(startYear)"
+        }
+        return "\(period.start.formatted(month.year())) – \(last.formatted(month.year()))"
+    }
+
+    /// Footer rule: "Resets on the 1st of each month", "Resets on your card anniversary (Mar 1)".
+    static func resetRule(period: Period, years: Int?, basis: ResetBasis, openedOn: Date?, calendar: Calendar) -> String {
+        if basis == .cardmemberYear {
+            let anniversary = openedOn.map { " (\(anniversaryDay($0, calendar: calendar)))" } ?? ""
+            switch period {
+            case .multiYear: return "Every \(years ?? 4) years from your card anniversary\(anniversary)"
+            case .annual: return "Resets on your card anniversary\(anniversary)"
+            default: return "\(Formatters.period(period, years: years)), counted from your card anniversary\(anniversary)"
+            }
+        }
+        return switch period {
+        case .monthly: "Resets on the 1st of each month"
+        case .quarterly: "Resets Jan 1, Apr 1, Jul 1 and Oct 1"
+        case .semiannual: "Resets Jan 1 and Jul 1"
+        case .annual: "Resets Jan 1"
+        case .multiYear: "Resets every \(years ?? 4) years on Jan 1"
+        }
+    }
+
+    /// The anniversary is the 1st of the open month (cardmember periods start on the 1st).
+    private static func anniversaryDay(_ openedOn: Date, calendar: Calendar) -> String {
+        var c = calendar.dateComponents([.year, .month], from: openedOn)
+        c.day = 1
+        return (calendar.date(from: c) ?? openedOn).formatted(dateStyle(calendar).month(.abbreviated).day())
+    }
+
+    private static func dateStyle(_ calendar: Calendar) -> Date.FormatStyle {
+        Date.FormatStyle(locale: locale, calendar: calendar, timeZone: calendar.timeZone)
+    }
+
     private static func rounded(_ value: Decimal, scale: Int) -> Decimal {
         var input = value
         var result = Decimal()

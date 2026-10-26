@@ -28,7 +28,7 @@ Each milestone ends with something runnable on a device/simulator.
 - [ ] User-selectable category picker on Card Detail (engine support done; no catalog card uses it yet)
 
 ## M3 — Credits tracker
-- [ ] `CreditPeriodCalculator` (monthly / quarterly / semiannual / annual / multi-year; calendar vs. cardmember year) + tests with pinned dates, incl. month-end and leap-year edges
+- [x] `CreditPeriodCalculator` (monthly / quarterly / semiannual / annual / multi-year; calendar vs. cardmember year) + tests with pinned dates, incl. month-end and leap-year edges
 - [ ] Credits dashboard: remaining this period, soonest expiring first, totals
 - [ ] Mark used / log partial use; history of past periods
 

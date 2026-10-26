@@ -85,11 +85,13 @@ enum MultiplierCondition: String, Codable {
     var annualFee: Decimal
     var requiredMembershipName: String?       // e.g. "Robinhood Gold"
     var requiredMembershipMonthlyFee: Decimal?
+    var requiredMembershipAnnualFee: Decimal?
     var rewardCurrencyID: String    // "custom" = user-defined points
     var openedOn: Date?             // needed for cardmember-year credits / fee reminders
     var colorHex: String?
     var isArchived: Bool
     var sortIndex: Int              // manual wallet order
+    var addedAt: Date               // when the user added it; credit history starts here
     @Relationship(deleteRule: .cascade) var multipliers: [Multiplier]
     @Relationship(deleteRule: .cascade) var credits: [Credit]
     @Relationship(deleteRule: .cascade) var categorySelections: [CategorySelection] // user-selectable / rotating activations
@@ -161,5 +163,9 @@ Simple global preferences live in `UserDefaults` via `@AppStorage`:
 
 - **Terms last verified** for a catalog card: looked up in the current catalog by `catalogID` (not copied into `UserCard`).
 
-- **Current period** for a credit: computed by `CreditPeriodCalculator` from `period`, `resetBasis`, `openedOn`, and "now".
+- **Current period** for a credit: computed by `CreditPeriodCalculator` from `period`, `resetBasis`, `openedOn`, and "now". Every period is a block of whole months starting at local midnight on the 1st:
+  - `calendar`: aligned to Jan 1 (each month; Jan/Apr/Jul/Oct; Jan/Jul; each year). `multi_year` blocks start Jan 1 of the year the card was opened, or added (`addedAt`) if there's no open date.
+  - `cardmember_year`: blocks start on the 1st of the card's open month ("Resets on your card anniversary (Mar 1)" for a card opened Mar 15).
+- **Usage → period:** a `CreditUsage` belongs to the period whose range contains its `periodStart` (a range match, so a time-zone change doesn't orphan entries).
+- **History** runs from the current period back to the one containing the card's `addedAt` (or the oldest usage, if earlier).
 - **Remaining this period** = `amount − sum(usages where periodStart == currentPeriodStart)`.
