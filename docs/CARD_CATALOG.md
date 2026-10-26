@@ -174,9 +174,9 @@ Adding a card copies its catalog data into the user's store ([DATA_MODEL.md](DAT
   - Archives credits that were removed from the catalog. Their history is kept, and their reminders are cancelled.
   - Adds new credits.
   - Never touches credits the user added themselves (`catalogCreditID == nil`).
-  - Sets `catalogRevision` to the new revision and resets `hasLocalEdits` to false.
+  - Sets `catalogRevision` to the new revision.
   - Never changes `network`. The network is a fact about the user's physical card (Capital One cards can be on Visa, Mastercard or Discover), so the user owns it.
-- If the user has hand-edited that card (`hasLocalEdits`), Apply first warns that their edits will be replaced.
+- Catalog cards' rates and credits aren't user-editable, so Apply never overwrites user changes; only personal fields (nickname, last 4, network, color, open date) and per-credit settings belong to the user, and they're kept.
 - **Exception:** `rotating` quarter schedules (e.g. Freedom Flex's categories for next quarter) are applied automatically. They are expected every quarter and don't change the card's terms. For each quarter in the catalog, the card's rotating `Multiplier` rows for that quarter are replaced. Quarters already stored but no longer in the catalog are kept. The user still has to mark each quarter as activated.
 - Retired means the issuer no longer takes new applications (e.g. the Amex Classic Green Card since July 2026). Users add cards they already hold, so retired cards stay in Add Card search with a "No longer offered" label, and existing user cards keep working.
 

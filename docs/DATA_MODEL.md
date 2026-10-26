@@ -75,7 +75,6 @@ enum MultiplierCondition: String, Codable {
     var id: UUID
     var catalogID: String?          // nil for fully custom cards
     var catalogRevision: Int?       // catalog card `revision` this was copied from; lower than catalog → "Terms updated"
-    var hasLocalEdits: Bool         // user edited rates/credits by hand; warn before applying a catalog update
     var issuer: String
     var name: String
     var shortName: String?          // from catalog; compact display next to issuer

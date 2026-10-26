@@ -70,7 +70,7 @@ struct CardDetailView: View {
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Menu("More", systemImage: "ellipsis") {
-                    Button("Edit", systemImage: "pencil") { editing = true }
+                    Button("Edit Details", systemImage: "pencil") { editing = true }
                     if card.isArchived {
                         Button("Unarchive", systemImage: "tray.and.arrow.up") { card.isArchived = false }
                     } else {
@@ -148,7 +148,6 @@ struct CardDetailView: View {
         if let date = try? Date(template.lastVerified, strategy: .iso8601.year().month().day()) {
             lines.append("Terms checked \(date.formatted(.dateTime.month(.abbreviated).day().year())). Rates and credits can change; confirm with \(card.issuer).")
         }
-        if card.hasLocalEdits { lines.append("You've edited this card's rates.") }
         return lines.joined(separator: "\n")
     }
 }

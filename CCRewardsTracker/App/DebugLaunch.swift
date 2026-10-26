@@ -9,6 +9,7 @@ import SwiftUI
 ///   -openCategory dining           push the Best Card result for this category
 ///   -openCard <catalog id>         push this card's detail screen
 ///   -amount 85.40                  prefill the Best Card amount field
+///   -walletEditing                 start the Wallet list in edit mode
 /// `-hasSeenWelcome YES` works through UserDefaults' argument domain.
 enum DebugLaunch {
     private static func value(_ flag: String) -> String? {
@@ -31,6 +32,13 @@ enum DebugLaunch {
     static var openCategory: SpendCategory? { value("-openCategory").flatMap(SpendCategory.init(rawValue:)) }
     static var openCard: String? { value("-openCard") }
     static var amount: String? { value("-amount") }
+    static var walletEditing: Bool {
+        #if DEBUG
+        ProcessInfo.processInfo.arguments.contains("-walletEditing")
+        #else
+        false
+        #endif
+    }
 }
 
 private struct DebugSeeding: ViewModifier {

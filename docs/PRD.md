@@ -28,7 +28,7 @@ iPhone 17 Pro and iPhone 17 Pro Max on iOS 26 or later (iOS 27 is current). iPho
 - When the catalog changes a card the user already has, the card shows **"Terms updated"**. The user reviews the changes and applies them; nothing changes silently.
 - Add a **custom card** manually when it isn't in the catalog.
 - Per-card user settings: nickname, last 4 digits (optional, display only), card open date / anniversary month (needed for cardmember-year credits), color/art.
-- Edit, archive (hide but keep history), or delete a card. Editing a catalog card's multipliers or credits overrides the catalog values for that user only.
+- Add and remove cards from the wallet (delete, or archive to hide but keep history), and edit the personal settings above. A catalog card's multipliers and credits are read-only: they come from the catalog and change only through "Terms updated". A custom card's terms are whatever the user entered.
 
 **Acceptance**
 - User can add a catalog card in ≤ 3 taps after search.

@@ -1,9 +1,8 @@
 import SwiftData
 import SwiftUI
 
-/// WA-5 (edit mode): personal details and earn rates. Catalog terms other than rates stay read-only.
+/// WA-5 (edit mode): personal details only. Earn rates and credits come from the catalog.
 struct CardEditorView: View {
-    @Environment(CatalogStore.self) private var catalog
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     let card: UserCard
@@ -15,7 +14,6 @@ struct CardEditorView: View {
         _draft = State(initialValue: CardEditDraft(card: card))
     }
 
-    private var terms: CardTerms { CardTerms(card: card, catalog: catalog) }
     private var isDirty: Bool { draft.hasChanges(from: card) }
 
     var body: some View {
@@ -68,23 +66,8 @@ struct CardEditorView: View {
                         Text("Last 4 is optional and only used to tell your cards apart.")
                     }
                 }
-
-                Section {
-                    ForEach($draft.rates) { $rate in
-                        RateEditorRow(rate: $rate, terms: terms, issuer: card.issuer)
-                            .deleteDisabled(rate.isBase)
-                    }
-                    .onDelete { draft.rates.remove(atOffsets: $0) }
-                    Button("Add Rate", systemImage: "plus") { draft.addRate() }
-                } header: {
-                    Text("Earn Rates")
-                } footer: {
-                    if card.catalogID != nil {
-                        Text("Changing rates overrides \(card.issuer)'s terms for you only. Rotating bonus categories are managed by the catalog.")
-                    }
-                }
             }
-            .navigationTitle("Edit Card")
+            .navigationTitle("Edit Details")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -92,7 +75,7 @@ struct CardEditorView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
-                        draft.apply(to: card, context: context)
+                        draft.apply(to: card)
                         try? context.save()
                         dismiss()
                     }
@@ -133,45 +116,6 @@ struct CardEditorView: View {
                     .accessibilityLabel(tile.name)
                     .accessibilityAddTraits(selected ? .isSelected : [])
                 }
-            }
-        }
-    }
-}
-
-private struct RateEditorRow: View {
-    @Binding var rate: CardEditDraft.Rate
-    let terms: CardTerms
-    let issuer: String
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack {
-                if rate.isBase {
-                    Label(SpendCategory.other.displayName, systemImage: SpendCategory.other.symbol)
-                } else {
-                    Picker(selection: $rate.category) {
-                        ForEach(SpendCategory.allCases.filter { $0 != .other }) {
-                            Label($0.displayName, systemImage: $0.symbol).tag($0)
-                        }
-                    } label: {
-                        EmptyView()
-                    }
-                    .labelsHidden()
-                    .pickerStyle(.menu)
-                    .fixedSize()
-                }
-                Spacer()
-                TextField("Rate", text: $rate.rateText)
-                    .keyboardType(.decimalPad)
-                    .multilineTextAlignment(.trailing)
-                    .font(.body.weight(.semibold).monospacedDigit())
-                    .frame(width: 64)
-                    .foregroundStyle(rate.rate == nil ? Color("Urgent") : .primary)
-                Text(terms.unit == .percent ? "%" : "x")
-                    .foregroundStyle(.secondary)
-            }
-            if let condition = rate.condition, let text = CaveatCopy.condition(condition, brand: rate.brand, issuer: issuer) {
-                CaveatRow(text: text)
             }
         }
     }

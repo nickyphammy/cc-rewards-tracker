@@ -15,8 +15,9 @@ struct CardEditDraftTests {
         return CardFactory.addCard(from: template, sortIndex: 0, to: container.mainContext)
     }
 
-    @Test func personalEditsDontMarkLocalEdits() throws {
+    @Test func personalEditsApplyAndLeaveRatesAlone() throws {
         let card = try addCard("amex_gold")
+        let ratesBefore = card.standardMultipliers.map { "\($0.category.rawValue)=\($0.rate)" }
         var draft = CardEditDraft(card: card)
         #expect(!draft.hasChanges(from: card))
         draft.nickname = "  Gold  "
@@ -24,51 +25,36 @@ struct CardEditDraftTests {
         draft.network = .amex
         draft.colorHex = TileColor.copper.hex
         #expect(draft.hasChanges(from: card))
-        draft.apply(to: card, context: container.mainContext)
+        draft.apply(to: card)
         #expect(card.nickname == "Gold")
         #expect(card.last4 == "1005")
         #expect(card.colorHex == TileColor.copper.hex)
-        #expect(!card.hasLocalEdits)
+        #expect(card.standardMultipliers.map { "\($0.category.rawValue)=\($0.rate)" } == ratesBefore)
+        #expect(!CardEditDraft(card: card).hasChanges(from: card))
     }
 
-    @Test func rateEditsMarkLocalEditsAndKeepRotatingRows() throws {
-        let card = try addCard("chase_freedom_flex")
-        let rotatingBefore = (card.multipliers ?? []).filter { $0.rotatingQuarter != nil }.count
+    @Test func clearingFieldsStoresNil() throws {
+        let card = try addCard("amex_gold")
+        card.nickname = "Gold"
+        card.last4 = "1005"
         var draft = CardEditDraft(card: card)
-        let dining = try #require(draft.rates.firstIndex { $0.category == .dining })
-        draft.rates[dining].rateText = "4"
-        draft.addRate()
-        draft.rates[0].category = .gas
-        draft.rates[0].rateText = "2"
-        draft.apply(to: card, context: container.mainContext)
-
-        #expect(card.hasLocalEdits)
-        #expect(card.standardMultipliers.first { $0.category == .dining }?.rate == 4)
-        #expect(card.standardMultipliers.contains { $0.category == .gas && $0.rate == 2 })
-        #expect((card.multipliers ?? []).filter { $0.rotatingQuarter != nil }.count == rotatingBefore)
-    }
-
-    @Test func deletingARateRemovesIt() throws {
-        let card = try addCard("capone_savor")
-        var draft = CardEditDraft(card: card)
-        draft.rates.removeAll { $0.category == .streaming }
-        draft.apply(to: card, context: container.mainContext)
-        try container.mainContext.save()
-        #expect(!card.standardMultipliers.contains { $0.category == .streaming })
+        draft.nickname = "   "
+        draft.last4 = ""
+        draft.apply(to: card)
+        #expect(card.nickname == nil)
+        #expect(card.last4 == nil)
     }
 
     @Test func validation() throws {
         let card = try addCard("amex_gold")
         var draft = CardEditDraft(card: card)
+        #expect(draft.isValid)
         draft.last4 = "12"
         #expect(!draft.isValid)
-        draft.last4 = ""
-        draft.rates[0].rateText = "abc"
-        #expect(!draft.isValid)
-        draft.rates[0].rateText = "3"
+        draft.last4 = "1234"
         #expect(draft.isValid)
-        draft.rates.removeAll(where: \.isBase)
-        #expect(!draft.isValid)
+        draft.last4 = ""
+        #expect(draft.isValid)
     }
 
     @Test func activationIsPerQuarter() throws {

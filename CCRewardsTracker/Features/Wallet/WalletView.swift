@@ -1,7 +1,7 @@
 import SwiftData
 import SwiftUI
 
-/// WA-1: the user's cards. Tap for detail, swipe to archive or delete, drag to reorder.
+/// WA-1: the user's cards. Add from the catalog with +; swipe or Edit to remove; drag to reorder.
 struct WalletView: View {
     @Environment(\.modelContext) private var context
     @Query(sort: \UserCard.sortIndex) private var cards: [UserCard]
@@ -9,6 +9,7 @@ struct WalletView: View {
     @State private var showingPicker = false
     @State private var pendingDelete: UserCard?
     @State private var showArchived = false
+    @State private var editMode: EditMode = DebugLaunch.walletEditing ? .active : .inactive
 
     private var active: [UserCard] { cards.filter { !$0.isArchived } }
     private var archived: [UserCard] { cards.filter(\.isArchived) }
@@ -27,6 +28,7 @@ struct WalletView: View {
                                 }
                         }
                         .onMove(perform: move)
+                        .onDelete { pendingDelete = $0.first.map { active[$0] } }
                     }
                 }
                 if !archived.isEmpty {
@@ -68,6 +70,7 @@ struct WalletView: View {
             .sheet(isPresented: $showingPicker) { CardPickerView(mode: .addToWallet) }
             .deleteConfirmation(for: $pendingDelete) { path.removeAll() }
             .task { openDebugCard() }
+            .environment(\.editMode, $editMode)
         }
     }
 
@@ -101,8 +104,6 @@ private struct WalletRow: View {
                     StatusBadge(kind: .archived)
                 } else if card.needsActivation(quarter: Quarter.key(for: .now)) {
                     StatusBadge(kind: .activate(Formatters.quarter(Quarter.key(for: .now)).components(separatedBy: " ").first ?? ""))
-                } else if card.hasLocalEdits {
-                    StatusBadge(kind: .localEdits)
                 }
             }
         }

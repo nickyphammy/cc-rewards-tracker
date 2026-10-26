@@ -14,8 +14,8 @@ Each milestone ends with something runnable on a device/simulator.
 - [x] Catalog validation script (`catalog/validate.py`)
 - [x] Swift decode tests; bundle `catalog/catalog.json` into the app
 - [x] `CatalogStore` loading the bundled copy (remote fetch comes in M5)
-- [x] Add cards from catalog (search, multi-select picker), edit (personal details + earn rates; hand-editing rates sets `hasLocalEdits`), archive/delete, reorder
-- [ ] Add custom card; edit credits
+- [x] Add cards from catalog (search, multi-select picker), remove (swipe or Edit mode) / archive, reorder, edit personal details (nickname, last 4, network, color, open date). Catalog rates and credits are read-only
+- [ ] Add custom card (the user enters its rates and credits)
 - [x] Card detail screen showing multipliers, bonus-category activation and credits
 
 ## M2 — Best card finder
@@ -43,7 +43,7 @@ Each milestone ends with something runnable on a device/simulator.
 - [x] Catalog hosted on GitHub Pages; `catalog/validate.py` runs before every push
 - [ ] CI: GitHub Action that runs `validate.py` on push (needs `gh auth refresh -s workflow` to push workflow files)
 - [ ] `CatalogStore`: cached-vs-bundled load, 24h background check with ETag, pull-to-refresh in Add Card search, validate + atomic swap
-- [ ] "Terms updated" badge, change summary, Apply update (keeps credit history via `catalogCreditID`; warns on `hasLocalEdits`)
+- [ ] "Terms updated" badge, change summary, Apply update (keeps credit history via `catalogCreditID`)
 - [ ] Auto-apply rotating quarter schedules
 - [ ] Tests: newer/older/invalid/higher-schema catalogs, offline first launch
 - [ ] Publish Tier 2 cards (co-branded, legacy) remotely, with no app release. Cards that need a new spending category (e.g. business cards' office-supply, shipping or advertising rates) need an app release that adds the category first; until then older builds skip just those cards

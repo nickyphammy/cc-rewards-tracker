@@ -660,13 +660,12 @@ For a user-selectable row: "Your 3% category: **Dining** ›" opens a `Picker` o
 |---|---|
 | Normal | As above |
 | Terms updated | Banner section at top with **Review Changes** → WA-8 |
-| Local edits on a catalog card | Terms footer adds: "You've edited this card's rates or credits." |
 | Archived card | Banner "archivebox Archived. Not used in recommendations and no reminders." with an **Unarchive** button; credits show without progress bars |
-| No credits | The Credits section shows a single row "No credits" (secondary) plus **Add Credit**, which opens WA-7 directly and marks the card `hasLocalEdits` if it's a catalog card |
+| No credits | The Credits section shows a single row "No credits" (secondary) plus **Add Credit** on custom cards only (opens WA-7). Catalog cards show just "No credits" |
 | Catalog card missing from the current catalog (validation dropped it) | Footer: "Terms details unavailable on this app version." Everything else works from the user's stored copy |
 
 **Interactions:**
-- The **⋯** menu offers **Edit** (→ WA-5), **Archive** / **Unarchive**, and **Delete** (destructive → confirmation).
+- The **⋯** menu offers **Edit Details** (→ WA-5), **Archive** / **Unarchive**, and **Delete** (destructive → confirmation).
 - Credit rows push CR-2.
 - The Activated toggle writes `CategorySelection` for that quarter immediately.
 - When reached from a BC-2 activation hint, scroll to Bonus Categories on appear and briefly highlight the current quarter's row (a 1 s background pulse; a fade under Reduce Motion).
@@ -807,11 +806,11 @@ For a user-selectable row: "Your 3% category: **Dining** ›" opens a `Picker` o
 
 ## WA-5 Card Editor (new custom card / edit any card)
 
-**Purpose:** create a custom card, or edit an existing card's details, rates and credits.
+**Purpose:** create a custom card, or edit an existing card's personal details. A catalog card's rates and credits are never editable.
 
 **Entry:**
 - WA-3 **Add a Custom Card** (pushed, title "New Card").
-- WA-2 **⋯ → Edit** (sheet, title "Edit Card").
+- WA-2 **⋯ → Edit Details** (sheet, title "Edit Details").
 - CR-1 / CR-2 "Add card open date" (sheet, scrolled and focused on Card opened).
 
 ```
@@ -855,11 +854,8 @@ For a user-selectable row: "Your 3% category: **Dining** ›" opens a `Picker` o
   - There is **no cents-per-point field**.
 - **Earn rates:** Everything Else is always first and required (default empty; placeholder "1"). Other rows are listed by rate. Tapping a row pushes WA-6.
 - **Credits:** each row pushes WA-7. Swipe to delete.
-- **Edit mode on a catalog card:**
-  - Card name, issuer, fee and rewards are read-only, with footer "From the catalog. Updated through 'Terms updated'."
-  - **Network stays editable** (moved into the Personalize section for catalog cards). Editing it does not set `hasLocalEdits`.
-  - Rates and credits are editable. The Earn Rates footer reads: "Changing rates or credits overrides American Express's terms for you only. A future catalog update will ask before replacing your changes."
-  - Rotating and auto-top-category rows appear read-only ("Managed by the catalog").
+- **Edit mode on a catalog card:** only the card preview and the **Personalize** section are shown: Nickname, Last 4, **Network**, Card opened and Color. Card name, issuer, fee, rewards, earn rates and credits come from the catalog and change only through "Terms updated" (WA-8). They are shown on WA-2, not here.
+- **Edit mode on a custom card** (with custom cards): the full form above, since the user owns those terms.
 
 **States:**
 
@@ -873,7 +869,7 @@ For a user-selectable row: "Your 3% category: **Dining** ›" opens a `Picker` o
 
 **Interactions:**
 - **Save** (new) adds the card and follows the same post-add steps as WA-4, including ON-2.
-- **Save** (edit) writes the changes. If rates or credits changed on a catalog card, it sets `hasLocalEdits = true`. Editing only personal fields does not set it.
+- **Save** (edit) writes the changes.
 
 **VoiceOver:** standard form labels. Each rate row reads "Everything Else, 2 percent cash back, edit".
 
@@ -977,9 +973,6 @@ For a user-selectable row: "Your 3% category: **Dining** ›" opens a `Picker` o
 │ │ AX   │ American Express              │
 │ └──────┘ Checked Oct 20, 2026          │
 │                                        │
-│ ⚠ You've edited this card. Applying    │  local-edits banner (Caution)
-│   replaces your rate and credit edits. │  only when hasLocalEdits
-│                                        │
 │ FEES                                   │
 │ │ Annual fee         ~~$250~~ → $325 │ │
 │ EARN RATES                             │
@@ -1015,8 +1008,7 @@ For a user-selectable row: "Your 3% category: **Dining** ›" opens a `Picker` o
 
 | State | Shown |
 |---|---|
-| Changes, no local edits | As above without the warning banner |
-| Changes + `hasLocalEdits` | Warning banner; **Apply Update** first shows a confirmation dialog (see [FLOWS.md](FLOWS.md#f7-review-and-apply-terms-updated)) |
+| Changes | As above |
 | Only unchanged fields differ (edge case) | Body "No changes that affect you." The button reads **Mark as Reviewed** and sets `catalogRevision` |
 | Applying | Button shows `ProgressView`; the sheet can't be dismissed |
 | Apply failed | Alert "Couldn't apply the update. Your card hasn't changed." |

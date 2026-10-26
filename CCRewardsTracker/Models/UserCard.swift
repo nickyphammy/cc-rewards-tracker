@@ -8,7 +8,6 @@ import SwiftData
     var id: UUID = UUID()
     var catalogID: String?
     var catalogRevision: Int?
-    var hasLocalEdits: Bool = false
     var issuer: String = ""
     var name: String = ""
     var shortName: String?

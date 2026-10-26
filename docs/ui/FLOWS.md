@@ -40,7 +40,7 @@ Each flow lists its trigger, the steps (**bold** = user action), what the system
 3. **Tap Amex Gold** (tap 1) → push **WA-4 Review & Add**, which shows the tile preview in the default Royal color, rates and credits summaries, and "Terms checked Oct 1, 2026".
 4. *Optional:* fill Nickname, Last 4 ("1005"), Card opened ("March 2023") and pick a color. None of these is required.
 5. **Tap Add to Wallet** (tap 2). The app:
-   1. Creates a `UserCard` and copies multipliers and credits from the catalog, with `catalogID` set, `catalogRevision` set to the catalog card's `revision`, and `hasLocalEdits = false`.
+   1. Creates a `UserCard` and copies multipliers and credits from the catalog, with `catalogID` set, and `catalogRevision` set to the catalog card's `revision`.
    2. Plays the `.success` haptic.
 6. **Reminder permission:** if this card has ≥1 credit **and** notification status is `.notDetermined`, the sheet content is replaced by **ON-2 Reminder Primer** ("Amex Gold has $77 in credits…").
    - **Tap Turn On Reminders** → the iOS permission alert appears. Allow or Don't Allow → the sheet dismisses. If allowed, `ReminderScheduler` schedules this card's reminders.
@@ -209,17 +209,12 @@ Notifications are grouped by card (`threadIdentifier = cardID`). The amounts in 
 1. The **WA-1** row shows the "⟳ Terms updated" badge. There is no push notification and no alert.
 2. **Tap the card → WA-2.** A banner at the top reads: "American Express changed this card's terms. **Review Changes ›**"
 3. **Tap Review Changes → WA-8 sheet.** It shows the diff: annual fee $250 → $325, groceries cap $25,000 → $50,000, new Hotels 2x, Streaming removed, new Dunkin' Credit, Dining Credit $10 → $15, Hotel Credit removed (→ archived, history kept).
-4. **Tap Apply Update.**
-   - **No local edits:** apply immediately.
-   - **`hasLocalEdits == true`:** show a confirmation dialog first:
-     - Title "Replace your edits?"
-     - Message "You changed this card's rates or credits. Applying uses American Express's current terms instead. Credits you added yourself stay."
-     - Buttons **Apply and Replace Edits** (destructive) / **Cancel**.
+4. **Tap Apply Update.** It applies immediately; catalog cards' rates and credits aren't user-editable, so there are no user edits to replace.
 5. **Apply** (the rules in [CARD_CATALOG.md](../CARD_CATALOG.md#applying-updates-to-a-users-cards)):
    - Update the card's fields and replace its multipliers. The user's network choice is kept (see SCREENS open question 7).
    - Update matched credits by `catalogCreditID`, keeping usage history and the user's enrollment and reminder settings.
    - Archive removed credits (cancelling their reminders) and add new credits (scheduling their reminders).
-   - Set `catalogRevision` to the new revision and `hasLocalEdits = false`.
+   - Set `catalogRevision` to the new revision.
 6. `.success` haptic, then the sheet dismisses. On WA-2 the banner is gone, the rates and credits reflect the new terms, and **Archived Credits (1)** now lists Hotel Credit. The WA-1 badge clears.
 7. Best Card results use the new rates from the next lookup.
 
