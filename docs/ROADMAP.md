@@ -29,7 +29,7 @@ Each milestone ends with something runnable on a device/simulator.
 
 ## M3 — Credits tracker
 - [x] `CreditPeriodCalculator` (monthly / quarterly / semiannual / annual / multi-year; calendar vs. cardmember year) + tests with pinned dates, incl. month-end and leap-year edges
-- [ ] Credits dashboard: remaining this period, soonest expiring first, totals
+- [x] Credits dashboard: remaining this period, soonest expiring first, totals (Credits tab with badge; swipe to mark used)
 - [ ] Mark used / log partial use; history of past periods
 
 ## M4 — Reminders

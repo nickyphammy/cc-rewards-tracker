@@ -56,4 +56,9 @@ extension Credit {
     }
 
     var needsEnrollment: Bool { requiresEnrollment && !isEnrolled }
+
+    func status(now: Date, calendar: Calendar = .current) -> CreditStatus {
+        let current = period(containing: now, calendar: calendar)
+        return CreditStatus(id: id, name: name, amount: amount, used: current.map(used(in:)) ?? 0, period: current)
+    }
 }

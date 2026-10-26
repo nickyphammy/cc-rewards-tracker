@@ -3,7 +3,7 @@ import SwiftUI
 /// Capsule with a symbol and a label. The text is always present, never icon-only.
 struct StatusBadge: View {
     enum Kind {
-        case retired, inWallet, archived, tie, activate(String)
+        case retired, inWallet, archived, tie, activate(String), enroll
 
         var label: String {
             switch self {
@@ -12,6 +12,7 @@ struct StatusBadge: View {
             case .archived: "Archived"
             case .tie: "Tie"
             case .activate(let quarter): "Activate \(quarter) categories"
+            case .enroll: "Enroll first"
             }
         }
 
@@ -22,12 +23,14 @@ struct StatusBadge: View {
             case .archived: "archivebox"
             case .tie: "equal.circle"
             case .activate: "lightbulb.min"
+            case .enroll: "person.badge.clock"
             }
         }
 
         var tint: Color {
             switch self {
             case .activate: .accentColor
+            case .enroll: Color("Caution")
             default: .secondary
             }
         }
