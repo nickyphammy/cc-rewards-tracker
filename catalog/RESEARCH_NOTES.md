@@ -59,3 +59,15 @@ The terms were researched on this date from issuer pages first, with secondary s
   - The hotel credit rose to $100.
   - New Global Entry credit.
 - **Capital One SavorOne:** returned in Aug 2025 as a separate fair-credit card with a $39 fee. It's not in the catalog yet.
+
+## 2026-10-26: added the original Chase Freedom (`catalogVersion` 2026102603)
+
+- **Status:** the original Chase Freedom (Visa) is closed to new applicants, so it's marked `retired`. Existing holders still use it.
+- **Rates:**
+  - The same quarterly 5% rotating categories as Freedom Flex: $1,500 cap per quarter, activation required. The quarters are copied from the Flex entry.
+  - 1% on everything else.
+  - None of Flex's always-on rates: no 5% on Chase Travel, no 3% on dining or drugstores (NerdWallet).
+- **Not confirmed on chase.com:** the card has no public product page any more, so these values come from secondary sources.
+  - The 2% Lyft rate through Sept 2027 comes from CardPointers.
+  - The rotating categories being shared with Flex comes from NerdWallet and Chase's Q2 2026 category announcement, which names both cards.
+- **Maintenance:** when publishing a new quarter, update `rotating` on both `chase_freedom_flex` and `chase_freedom`.

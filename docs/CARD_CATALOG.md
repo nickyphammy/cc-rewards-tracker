@@ -19,7 +19,7 @@ Personal cards that earn the issuer's own points or cash back:
 
 - **Robinhood:** Robinhood Gold Card
 - **Amex:** Platinum, Gold, Classic Green (retired: closed to new applicants July 2026), Blue Cash Preferred, Blue Cash Everyday
-- **Chase:** Sapphire Reserve, Sapphire Preferred, Freedom Unlimited, Freedom Flex
+- **Chase:** Sapphire Reserve, Sapphire Preferred, Freedom Unlimited, Freedom Flex, Freedom (original Visa; retired: closed to new applicants)
 - **Capital One:** Venture X, Venture, VentureOne, Savor, Quicksilver
 
 ### Tier 2: added through remote updates once the pipeline works
@@ -34,7 +34,7 @@ The rest of each issuer's lineup:
 ### Card-specific modeling notes
 
 - **Robinhood Gold Card:** it needs a paid Robinhood Gold membership. Model that membership fee as `requiredMembership`, not as `annualFee`. As of Sept 1, 2026 it earns a flat 3% on everything; the old 5% travel-portal bonus is gone. Robinhood sells the membership at $5/month or $50/year, and the card requires the annual plan.
-- **Chase Freedom Flex:** it has quarterly rotating 5% categories that require activation. Publish each quarter's categories in `rotating` (see "Applying updates to a user's cards" below).
+- **Chase Freedom Flex and original Freedom:** both have the same quarterly rotating 5% categories that require activation. Update both cards' `rotating` together. Publish each quarter's categories in `rotating` (see "Applying updates to a user's cards" below).
 - **Capital One Venture, VentureOne, Savor, Quicksilver:** Capital One is moving these cards to Discover in waves through early 2027, so an existing holder's card may be Visa, Mastercard or Discover. The catalog says `discover`, which is what new accounts get, and the user edits the network on their own card. Venture X stays on Visa.
 - **Gaps the schema can't express yet:** merchant exclusions (e.g. Walmart and Target don't count as groceries), "prepaid only" hotel bonuses, stacked rotating rates (Freedom Flex dining in Q4 2026), and spend-gated credits (some Sapphire Reserve credits unlock only after $75k of spending a year). For now these are described in each credit's `notes` or left out. See the research notes for the first publish.
 - **Amex Platinum / Gold:** these cards have many credits on different schedules (monthly, semiannual, annual), some needing enrollment. They are the main test case for F2.

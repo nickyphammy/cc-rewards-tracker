@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 2026102602,
-  "publishedAt": "2026-10-26T12:00:00Z",
+  "catalogVersion": 2026102603,
+  "publishedAt": "2026-10-26T18:00:00Z",
   "currencies": [
     {
       "id": "cash",
@@ -514,6 +514,59 @@
           "notes": "Up to $120 for Global Entry or up to $85 for TSA PreCheck, once every 4 years. The 4 years run from the last credit, not by calendar."
         }
       ]
+    },
+    {
+      "id": "chase_freedom",
+      "revision": 1,
+      "issuer": "Chase",
+      "name": "Chase Freedom",
+      "shortName": "Freedom",
+      "rateUnit": "percent",
+      "network": "visa",
+      "annualFee": 0,
+      "requiredMembership": null,
+      "rewardCurrency": "chase_ur",
+      "lastVerified": "2026-10-26",
+      "retired": true,
+      "sources": [
+        "https://cardpointers.com/cards/chase-freedom",
+        "https://www.nerdwallet.com/credit-cards/learn/chase-freedom-calendar",
+        "https://media.chase.com/news/chase-freedom-2026-q2-categories"
+      ],
+      "multipliers": [
+        {
+          "rate": 5,
+          "rotating": {
+            "quarters": {
+              "2026Q4": [
+                "groceries",
+                "dining"
+              ],
+              "2027Q1": [
+                "groceries",
+                "streaming"
+              ]
+            }
+          },
+          "condition": "requires_activation",
+          "cap": {
+            "amount": 1500,
+            "period": "quarterly"
+          },
+          "afterCapRate": 1
+        },
+        {
+          "category": "transit",
+          "rate": 2,
+          "condition": "brand_only",
+          "brand": "Lyft"
+        },
+        {
+          "category": "other",
+          "rate": 1
+        }
+      ],
+      "credits": []
     },
     {
       "id": "chase_freedom_flex",
