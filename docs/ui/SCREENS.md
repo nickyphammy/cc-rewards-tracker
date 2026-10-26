@@ -32,7 +32,7 @@ TabView
 ├── Wallet       NavigationStack: WA-1 Wallet → WA-2 Card Detail → CR-2 Credit Detail
 │                                 sheets: WA-3/WA-4 Add Card, WA-5 Card Editor (→ WA-6, WA-7), WA-8 Terms Update
 └── Settings     NavigationStack: ST-1 Settings → ST-2 Reminder Timing
-Full-screen / sheets owned by the root: ON-1 Welcome, ON-2 Reminder Primer
+Full-screen / sheets owned by the root: ON-1 Card Picker (first launch), ON-2 Reminder Primer
 ```
 
 **Launch rule:** a cold launch always opens **Best Card → BC-1**. When the app returns from the background after 15 minutes or more, it also resets to BC-1, unless a sheet with unsaved edits is open. Otherwise the app resumes where the user left it.
@@ -41,49 +41,55 @@ Full-screen / sheets owned by the root: ON-1 Welcome, ON-2 Reminder Primer
 
 ---
 
-## ON-1 Welcome
+## ON-1 Card Picker (first launch)
 
-**Purpose:** a one-screen introduction on first launch that leads straight into adding a card.
+> **Changed 2026-10-26 (user decision):** this replaces the earlier Welcome sheet. The first screen is where the user picks their cards.
 
-**Entry:** first launch only (shown when `hasSeenWelcome == false`). Presented as a `.sheet` over the Best Card tab with `.presentationDetents([.large])`.
+**Purpose:** let a new user tick every card they carry in one pass.
+
+**Entry:** first launch, shown full-screen when `hasSeenWelcome == false` and the wallet is empty. The same view is the **Add Cards** sheet from WA-1 **＋** and the BC-1 / WA-1 empty states (inline title, **Cancel** in the toolbar, no intro text, no Skip).
 
 ```
 ┌────────────────────────────────────────┐
-│                                        │
-│          (creditcard.and.123)          │
-│                                        │
-│       Get more from your cards         │
-│                                        │
-│  ✦ Best card at the register           │
-│    Pick what you're buying and see     │
-│    which card earns the most.          │
-│                                        │
-│  🎁 Never waste a credit               │
-│    Track monthly and yearly credits    │
-│    and get reminded before they end.   │
-│                                        │
-│  🔒 Stays on your iPhone               │
-│    No bank logins. No full card        │
-│    numbers. Ever.                      │
-│                                        │
-│                                        │
-│ ╭────────────────────────────────────╮ │
-│ │        Add Your First Card         │ │
+│               Your Cards               │
+│ ┌────────────────────────────────────┐ │
+│ │ 🔍 Search cards                    │ │  .searchable, always shown
+│ └────────────────────────────────────┘ │
+│ Select every card you carry. We'll use │  subheadline, secondary
+│ them to tell you which card earns the  │
+│ most for each purchase.                │
+│ American Express                       │
+│ ┌────────────────────────────────────┐ │
+│ │ ▭ Blue Cash Everyday           ○   │ │
+│ │   No annual fee                    │ │
+│ │ ▭ Gold                         ◉   │ │  checkmark.circle.fill, accent
+│ │   $325/yr                          │ │
+│ │ ▭ Classic Green                ○   │ │
+│ │   $150/yr                          │ │
+│ │   ◷ No longer offered              │ │
+│ └────────────────────────────────────┘ │
+│ Capital One …  Chase …  Robinhood …    │
+├────────────────────────────────────────┤
+│ ╭────────────────────────────────────╮ │  safeAreaBar (scroll edge effect)
+│ │            Add 3 Cards             │ │  primaryActionStyle
 │ ╰────────────────────────────────────╯ │
-│               Not Now                  │
+│              Skip for Now              │  onboarding only
 └────────────────────────────────────────┘
 ```
 
-**Content:** the symbol is at 64 pt in `AccentColor`. The title is `.largeTitle` bold. The three feature rows use symbols `creditcard.and.123`, `gift`, `lock.shield`, with a headline title and subheadline secondary body.
+**Content:**
+- Grouping, sorting, retired cards and search behave the same as WA-3.
+- Rows show `CardTile(.small)`, the short name, the fee line and "In your wallet" if the user already has the card.
+- While searching, the list is flat and the subtitle adds the issuer ("American Express · $325/yr").
 
-**States:** one state only.
+**States:** browse; searching; no results (`ContentUnavailableView.search`). The button reads "Select Your Cards" (disabled) when nothing is selected, then "Add 1 Card" / "Add N Cards".
 
 **Interactions:**
-- **Add Your First Card** (glassProminent) sets `hasSeenWelcome = true`, dismisses, and presents WA-3 Add Card.
-- **Not Now** sets `hasSeenWelcome = true` and dismisses to BC-1, which shows its empty state.
-- Swipe-down dismissal behaves like Not Now.
+- Tapping a row toggles selection, with a `.selection` haptic.
+- **Add N Cards** copies each selected card from the catalog, in catalog order, and then dismisses (sheet) or shows the tabs (first launch).
+- **Skip for Now** sets `hasSeenWelcome = true` and shows the BC-1 empty state.
 
-**VoiceOver:** the title is a header. Each feature row is one element ("Best card at the register. Pick what you're buying and see which card earns the most.").
+**VoiceOver:** each row is one button, "Gold, American Express, 325 dollars a year", with the Selected trait when ticked.
 
 ---
 

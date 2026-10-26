@@ -38,7 +38,7 @@ The visual and interaction rules for CC Rewards Tracker. Screens are specified i
 
 ### Named asset colors (`Assets.xcassets`)
 
-Only these five custom colors exist. Each has a light and a dark value, and all text uses pass WCAG AA (4.5:1) on `.systemBackground` and `.secondarySystemGroupedBackground`.
+Only these six custom colors exist. Each has a light and a dark value, and all text uses pass WCAG AA (4.5:1) on `.systemBackground` and `.secondarySystemGroupedBackground`.
 
 | Asset name | Light | Dark | Used for |
 |---|---|---|---|
@@ -47,6 +47,7 @@ Only these five custom colors exist. Each has a light and a dark value, and all 
 | `Caution` | `#8A5A00` | `#FFC24D` | Credit ends within 7 days; "Terms updated" badge; local-edits warning |
 | `HintTint` | `#3D5AFE` @ 12% opacity | `#8C9EFF` @ 18% opacity | Background of hint rows ("5x if booked through Chase Travel") |
 | `TileStroke` | `#000000` @ 8% | `#FFFFFF` @ 14% | 1 pt hairline around card tiles so dark tiles don't vanish in dark mode |
+| `OnAccent` | `#FFFFFF` | `#002B1D` | Label on filled `AccentColor` buttons. White on the dark-mode mint is too low-contrast, so dark mode uses a deep green |
 
 ### Card tile colors
 
@@ -303,7 +304,7 @@ A currency `TextField` with `.keyboardType(.decimalPad)`, `.monospacedDigit()`, 
 
 | Role | Style |
 |---|---|
-| Primary action on a screen (Add to Wallet, Mark as Used, Apply Update, Add Your First Card) | `.buttonStyle(.glassProminent)`, `.controlSize(.large)`, full width in sheets |
+| Primary action on a screen (Add to Wallet, Mark as Used, Apply Update, Add Your First Card) | `.primaryActionStyle()`: `.glassProminent`, `.controlSize(.large)`, `OnAccent` label; full width in sheets |
 | Secondary action (Log Partial Amount, Not Now) | `.buttonStyle(.glass)` or plain text button |
 | Toolbar actions | System toolbar items (glass is automatic) |
 | Destructive | `Button(role: .destructive)` inside confirmation dialogs or menus only |

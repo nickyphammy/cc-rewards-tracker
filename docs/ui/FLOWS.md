@@ -10,19 +10,20 @@ Each flow lists its trigger, the steps (**bold** = user action), what the system
 
 **Goal:** get from install to a useful Best Card screen with as little friction as possible. No account and no permission prompts up front.
 
-1. The app launches on **Best Card → BC-1**. The wallet is empty, so BC-1 shows its empty state underneath.
-2. `hasSeenWelcome == false` → present **ON-1 Welcome** as a sheet.
-3. **Tap Add Your First Card.** Set `hasSeenWelcome = true`, dismiss ON-1 and present **WA-3 Add Card**.
-4. Continue with [F2](#f2-add-a-card-from-the-catalog) or [F3](#f3-add-a-custom-card).
-5. After the card is added (and ON-2 if shown), the sheet dismisses to **BC-1**, which now shows the grid and "Comparing 1 card".
-6. The user can add more cards from **Wallet → ＋**. BC-1 has no add button, which keeps it clean.
+> **Changed 2026-10-26 (user decision):** the first screen is the card picker itself, not a Welcome sheet. Users tick every card they carry, in one pass.
 
-**Alternate path:** **Tap Not Now** on ON-1 → BC-1 empty state ("Add a card to get started" / **Add Card**). The Credits and Wallet tabs show their own empty states, each with **Add Card**.
+1. On first launch (`hasSeenWelcome == false` and the wallet is empty), the app opens full-screen on **ON-1 Card Picker**: the catalog grouped by issuer, with search always visible.
+2. **Tap each card you have.** Rows toggle a checkmark, and the bottom button counts them: "Add 3 Cards".
+3. **Tap Add 3 Cards.** The app copies each card from the catalog (the same as F2 step 5.1, in catalog order), sets `hasSeenWelcome = true` and shows the tabs on **Best Card → BC-1**, "Comparing 3 cards".
+4. Cards are personalized later on WA-2 (nickname, last 4, network, color, open date). Onboarding asks nothing else.
+5. The user can add more cards from **Wallet → ＋** or the BC-1 empty state, both of which open the same picker as a sheet ("Add Cards", with **Cancel**).
+
+**Alternate path:** **Skip for Now** sets `hasSeenWelcome = true` → BC-1 empty state ("Add a card to get started" / **Add Card**).
 
 **Edge cases:**
-- **No network on first launch:** nothing changes. Search runs on the bundled catalog, and WA-3's footer says "Offline. Showing cards saved on this iPhone."
-- ON-1 is never shown again, even if every card is later deleted. The empty states take over.
-- **Notification permission is not requested here.** It waits for the first card with credits (F2 step 6).
+- **No network on first launch:** nothing changes. The picker uses the bundled catalog.
+- The full-screen picker is never shown again once `hasSeenWelcome` is true, even if every card is later deleted. The empty states take over.
+- **Notification permission is not requested here.** It waits for the first card with credits (F2 step 6, once reminders exist).
 
 ---
 
@@ -30,7 +31,9 @@ Each flow lists its trigger, the steps (**bold** = user action), what the system
 
 **Goal:** add a catalog card in ≤3 taps after search (PRD F1).
 
-**Trigger:** WA-1 **＋**, any empty-state **Add Card** button, or ON-1.
+**Trigger:** WA-1 **＋** or any empty-state **Add Card** button.
+
+> **Implemented today:** the add sheet is the multi-select picker from F1 (tick cards → **Add N Cards**), and cards get personalized afterwards on WA-2. WA-4 Review & Add (single card, personalize before adding) is still the target for when custom cards land.
 
 1. **WA-3** opens with the search field visible and the catalog grouped by issuer.
 2. **Type "gold"** → the list filters live to Amex Gold and Robinhood Gold Card.
