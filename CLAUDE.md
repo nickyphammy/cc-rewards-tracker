@@ -27,6 +27,10 @@ Swift 6 / Xcode 27, SwiftUI, SwiftData, iOS 26 deployment target (iOS 27 is curr
 - Catalog cards are limited to Robinhood Gold, Amex, Chase and Capital One for now; anything else is a custom card.
 - Card terms in `catalog/catalog.json` must carry `lastVerified` (checked against the issuer's site); don't present them as guaranteed-current. Never reuse or rename a catalog credit `id`; bump the file's `catalogVersion` on every publish, and the card's `revision` on every change to its terms. Changes to rotating-quarter schedules alone do **not** bump `revision`; see docs/CARD_CATALOG.md. Never delete a catalog card; mark it `retired`.
 
+## Committing
+
+Commit after each feature (or roadmap item) is implemented **and tested**: tests pass, and UI changes have been screenshotted on both simulators. One feature per commit. Never commit untested or failing work; if something can't be tested, say so in the commit message. Check off the matching item in `docs/ROADMAP.md` in the same commit.
+
 ## Verifying work
 
 - Catalog changes: `python3 catalog/validate.py` must pass before any push to `main`, because pushing `main` publishes the catalog via GitHub Pages (https://nickyphammy.github.io/cc-rewards-tracker/catalog/catalog.json). Add `--previous <last published file>` to check that no card was removed.
