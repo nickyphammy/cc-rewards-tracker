@@ -448,7 +448,7 @@ Caveats come before hints. Neither is ever truncated.
 **Content:**
 - Header block: card tile (small) + card display name + period word; remaining (`.largeTitle`); "of $amount · current period span"; urgency line; progress bar.
 - **Enrollment** section, only when `requiresEnrollment`: a toggle bound to `isEnrolled`.
-- **Reminders** section: the **Remind me** toggle (`remindersEnabled`) and a **When** row showing either "Default (7 and 1 days before)" or the custom offsets; it pushes ST-2 in per-credit mode.
+- **Reminders** section *(added with M4 reminders; not shown before then)*: the **Remind me** toggle (`remindersEnabled`) and a **When** row showing either "Default (7 and 1 days before)" or the custom offsets; it pushes ST-2 in per-credit mode.
 - **History:**
   - The current period first, then past periods newest first, each with its total used.
   - Usage entries are listed under their period (date · amount · note).

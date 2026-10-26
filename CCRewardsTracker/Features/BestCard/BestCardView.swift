@@ -39,6 +39,7 @@ struct BestCardView: View {
             .navigationTitle("Best Card")
             .navigationDestination(for: SpendCategory.self) { BestCardResultView(category: $0) }
             .navigationDestination(for: UserCard.self) { CardDetailView(card: $0) }
+            .navigationDestination(for: Credit.self) { CreditDetailView(credit: $0) }
             .sheet(isPresented: $showingPicker) { CardPickerView(mode: .addToWallet) }
             .task {
                 if path.isEmpty, let category = DebugLaunch.openCategory { path.append(category) }

@@ -59,6 +59,7 @@ struct WalletView: View {
             }
             .navigationTitle("Wallet")
             .navigationDestination(for: UserCard.self) { CardDetailView(card: $0) }
+            .navigationDestination(for: Credit.self) { CreditDetailView(credit: $0) }
             .toolbar {
                 if active.count >= 2 {
                     ToolbarItem(placement: .topBarLeading) { EditButton() }

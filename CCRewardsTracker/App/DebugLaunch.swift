@@ -10,6 +10,8 @@ import SwiftUI
 ///   -openCard <catalog id>         push this card's detail screen
 ///   -amount 85.40                  prefill the Best Card amount field
 ///   -walletEditing                 start the Wallet list in edit mode
+///   -openCredit "Uber Cash"        push this credit's detail on the Credits tab (first match by name)
+///   -openLogUsage                  open Log Usage on that credit
 ///   -seedUsage                     with -seedCards: use the first card's first credit fully and its second by half
 /// `-hasSeenWelcome YES` works through UserDefaults' argument domain.
 enum DebugLaunch {
@@ -34,6 +36,8 @@ enum DebugLaunch {
     static var openCard: String? { value("-openCard") }
     static var amount: String? { value("-amount") }
     static var seedUsage: Bool { flag("-seedUsage") }
+    static var openCredit: String? { value("-openCredit") }
+    static var openLogUsage: Bool { flag("-openLogUsage") }
     static var walletEditing: Bool { flag("-walletEditing") }
 
     private static func flag(_ name: String) -> Bool {

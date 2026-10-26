@@ -30,7 +30,7 @@ Each milestone ends with something runnable on a device/simulator.
 ## M3 — Credits tracker
 - [x] `CreditPeriodCalculator` (monthly / quarterly / semiannual / annual / multi-year; calendar vs. cardmember year) + tests with pinned dates, incl. month-end and leap-year edges
 - [x] Credits dashboard: remaining this period, soonest expiring first, totals (Credits tab with badge; swipe to mark used)
-- [ ] Mark used / log partial use; history of past periods
+- [x] Mark used / log partial use; history of past periods (CR-2 Credit Detail, CR-3 Log Usage; CR-2's Reminders section lands with M4)
 
 ## M4 — Reminders
 - [ ] Notification permission flow (on first card with credits)

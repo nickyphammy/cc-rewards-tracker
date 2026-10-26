@@ -45,3 +45,16 @@ struct CreditDashboardTests {
         #expect(CreditDashboard([], now: now, calendar: calendar).isEmpty)
     }
 }
+
+/// CR-3 validation (docs/ui/SCREENS.md "CR-3 Log Usage").
+struct LogUsageValidationTests {
+    @Test func validation() {
+        #expect(LogUsageView.validate("", remaining: 10) == .empty)
+        #expect(LogUsageView.validate("0", remaining: 10) == .empty)
+        #expect(LogUsageView.validate("0.00", remaining: 10) == .empty)
+        #expect(LogUsageView.validate("10.01", remaining: 10) == .overRemaining)
+        #expect(LogUsageView.validate("6", remaining: 10) == .valid(6))
+        #expect(LogUsageView.validate("10", remaining: 10) == .valid(10))
+        #expect(LogUsageView.validate("1", remaining: 0) == .overRemaining)
+    }
+}

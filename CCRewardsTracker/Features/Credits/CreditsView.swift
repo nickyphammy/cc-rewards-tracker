@@ -11,6 +11,8 @@ struct CreditsView: View {
     @State private var showingPicker = false
     @State private var editingCard: UserCard?
     @State private var markedCount = 0
+    @State private var loggingCredit: Credit?
+    @State private var path = NavigationPath()
 
     /// Credits on cards that are in the wallet and not archived.
     private var credits: [Credit] { allCredits.filter { $0.card.map { !$0.isArchived } ?? false } }
@@ -20,7 +22,7 @@ struct CreditsView: View {
         let byID = Dictionary(credits.map { ($0.id, $0) }) { first, _ in first }
         let dashboard = CreditDashboard(credits.map { $0.status(now: now, calendar: calendar) }, now: now, calendar: calendar)
 
-        NavigationStack {
+        NavigationStack(path: $path) {
             Group {
                 if dashboard.isEmpty {
                     ContentUnavailableView {
@@ -38,6 +40,13 @@ struct CreditsView: View {
             .navigationTitle("Credits")
             .sheet(isPresented: $showingPicker) { CardPickerView(mode: .addToWallet) }
             .sheet(item: $editingCard) { CardEditorView(card: $0) }
+            .sheet(item: $loggingCredit) { LogUsageView(credit: $0) }
+            .navigationDestination(for: Credit.self) { CreditDetailView(credit: $0) }
+            .task {
+                if path.isEmpty, let name = DebugLaunch.openCredit, let credit = credits.first(where: { $0.name == name }) {
+                    path.append(credit)
+                }
+            }
             .sensoryFeedback(.success, trigger: markedCount)
         }
         .onChange(of: scenePhase) { _, phase in
@@ -71,7 +80,9 @@ struct CreditsView: View {
                     DisclosureGroup("Used This Period (\(dashboard.used.count))",
                                     isExpanded: Binding(get: { showUsed || dashboard.availableCount == 0 }, set: { showUsed = $0 })) {
                         ForEach(dashboard.used) { status in
-                            if let credit = byID[status.id] { CreditRow(credit: credit, status: status, now: now) }
+                            if let credit = byID[status.id] {
+                                NavigationLink(value: credit) { CreditRow(credit: credit, status: status, now: now) }
+                            }
                         }
                     }
                 }
@@ -104,12 +115,17 @@ struct CreditsView: View {
             Section(title) {
                 ForEach(statuses) { status in
                     if let credit = byID[status.id] {
-                        CreditRow(credit: credit, status: status, now: now)
+                        NavigationLink(value: credit) { CreditRow(credit: credit, status: status, now: now) }
                             .swipeActions(edge: .leading, allowsFullSwipe: true) {
                                 Button("Mark Used", systemImage: "checkmark") { markUsed(credit) }
                                     .tint(Color.accentColor)
                             }
+                            .swipeActions(edge: .trailing) {
+                                Button("Log Amount", systemImage: "square.and.pencil") { loggingCredit = credit }
+                                    .tint(.indigo)
+                            }
                             .accessibilityAction(named: "Mark used") { markUsed(credit) }
+                            .accessibilityAction(named: "Log amount") { loggingCredit = credit }
                     }
                 }
             }

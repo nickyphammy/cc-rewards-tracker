@@ -59,7 +59,11 @@ struct CardDetailView: View {
                 if card.activeCredits.isEmpty {
                     Text("No credits").foregroundStyle(.secondary)
                 } else {
-                    ForEach(card.activeCredits) { CreditSummaryRow(credit: $0) }
+                    ForEach(card.activeCredits) { credit in
+                        NavigationLink(value: credit) {
+                            CreditRow(credit: credit, status: credit.status(now: .now), now: .now, showsCard: false)
+                        }
+                    }
                 }
             }
 
@@ -149,35 +153,5 @@ struct CardDetailView: View {
             lines.append("Terms checked \(date.formatted(.dateTime.month(.abbreviated).day().year())). Rates and credits can change; confirm with \(card.issuer).")
         }
         return lines.joined(separator: "\n")
-    }
-}
-
-private struct CreditSummaryRow: View {
-    let credit: Credit
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack(alignment: .firstTextBaseline) {
-                Text(credit.name)
-                Spacer()
-                Text(Formatters.money(credit.amount))
-                    .font(.body.weight(.semibold).monospacedDigit())
-            }
-            Text(Formatters.period(credit.period, years: credit.periodYears))
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-            if credit.requiresEnrollment && !credit.isEnrolled {
-                Label("Enroll first", systemImage: "person.badge.clock")
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(Color("Caution"))
-            }
-            if let notes = credit.notes, !notes.isEmpty {
-                Text(notes)
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-                    .lineLimit(3)
-            }
-        }
-        .accessibilityElement(children: .combine)
     }
 }
