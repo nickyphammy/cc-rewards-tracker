@@ -78,8 +78,8 @@ struct CardTile: View {
                 content.frame(width: width, height: (width / 1.586).rounded())
             } else {
                 content
-                    .frame(maxWidth: 320)
                     .aspectRatio(1.586, contentMode: .fit)
+                    .frame(maxWidth: 320)
             }
         }
     }

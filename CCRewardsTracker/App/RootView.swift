@@ -4,6 +4,7 @@ import SwiftUI
 struct RootView: View {
     @AppStorage("hasSeenWelcome") private var hasSeenWelcome = false
     @Query private var cards: [UserCard]
+    @State private var selectedTab = DebugLaunch.openTab ?? "bestCard"
 
     var body: some View {
         Group {
@@ -19,18 +20,15 @@ struct RootView: View {
     }
 
     private var tabs: some View {
-        TabView {
-            Tab("Best Card", systemImage: "creditcard.and.123") {
+        TabView(selection: $selectedTab) {
+            Tab("Best Card", systemImage: "creditcard.and.123", value: "bestCard") {
                 NavigationStack {
                     Text("Best Card")
                         .navigationTitle("Best Card")
                 }
             }
-            Tab("Wallet", systemImage: "wallet.bifold") {
-                NavigationStack {
-                    Text("\(cards.count) cards")
-                        .navigationTitle("Wallet")
-                }
+            Tab("Wallet", systemImage: "wallet.bifold", value: "wallet") {
+                WalletView()
             }
         }
     }

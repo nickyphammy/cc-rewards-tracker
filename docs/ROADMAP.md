@@ -14,8 +14,9 @@ Each milestone ends with something runnable on a device/simulator.
 - [x] Catalog validation script (`catalog/validate.py`)
 - [x] Swift decode tests; bundle `catalog/catalog.json` into the app
 - [x] `CatalogStore` loading the bundled copy (remote fetch comes in M5)
-- [ ] Add card from catalog (search), add custom card, edit (hand-editing rates or credits sets `hasLocalEdits`), archive/delete
-- [ ] Card detail screen showing multipliers and credits
+- [x] Add cards from catalog (search, multi-select picker), edit (personal details + earn rates; hand-editing rates sets `hasLocalEdits`), archive/delete, reorder
+- [ ] Add custom card; edit credits
+- [x] Card detail screen showing multipliers, bonus-category activation and credits
 
 ## M2 — Best card finder
 - [ ] `RecommendationEngine` + unit tests using the fixtures in [RECOMMENDATION_ENGINE.md](RECOMMENDATION_ENGINE.md)
