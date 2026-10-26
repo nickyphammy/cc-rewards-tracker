@@ -41,7 +41,7 @@ iPhone 17 Pro and iPhone 17 Pro Max on iOS 26 or later (iOS 27 is current). iPho
 ### F2. Credits & benefits tracker
 
 - For each card, list its recurring credits: name, amount, period (monthly / quarterly / semiannual / annual / multi-year, e.g. a Global Entry credit every 4 years), reset basis (calendar vs. cardmember year), and remaining amount for the current period.
-- User marks a credit as **used** (fully) or logs a **partial** amount.
+- User marks a credit as **used** (fully) or logs a **partial** amount. A mistaken entry can be deleted, which restores the remaining amount.
 - A **dashboard** across all cards shows credits expiring soonest first, with total value still available this period.
 - Credits automatically reset at the start of each new period; history of past periods is kept.
 - A credit that was removed from the catalog in an applied update is archived. It drops off the dashboard and its reminders are cancelled, but its history stays visible on the card.
@@ -56,7 +56,8 @@ iPhone 17 Pro and iPhone 17 Pro Max on iOS 26 or later (iOS 27 is current). iPho
 - Local notifications for credits not yet fully used, sent N days before the period ends (default: 7 days and 1 day before; configurable globally and per credit).
 - Optional monthly summary notification ("You have $45 in credits expiring this month").
 - No reminder once a credit is marked fully used for the period, or for archived credits and cards.
-- Annual-fee reminder before the card's anniversary (optional).
+- Annual-fee reminder 30 days before the card's anniversary (optional; needs `openedOn`).
+- Reminders are delivered at 9:00 AM local time. The monthly summary goes out on the 1st at 9:00 AM. An offset of 0 means the last day of the period.
 
 **Acceptance**
 - Marking a credit used cancels its pending reminders for that period.

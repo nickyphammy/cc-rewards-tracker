@@ -37,6 +37,8 @@ Cash back and the various points/miles programs are modeled as a **reward curren
 RewardCurrency
   id: String                 // "cash", "amex_mr", "chase_ur", "cap1_miles", "delta_skymiles", "citi_typ", ...
   name: String
+  unitName: String          // "points", "miles", "cash back": used in estimates ("earns ~342 points")
+  rateUnit: RateUnit        // .percent → "3%", .multiplier → "4x"
 ```
 
 Currencies ship in the `currencies` array of `catalog.json`, so new currencies arrive with remote catalog updates.
@@ -52,6 +54,7 @@ The catalog file format, field meanings, validation rules and update flow are in
 ```swift
 enum CardNetwork: String, Codable { case visa, mastercard, amex, discover }
 enum Period: String, Codable { case monthly, quarterly, semiannual, annual, multiYear = "multi_year" }
+enum RateUnit: String, Codable { case percent, multiplier }
 enum ResetBasis: String, Codable { case calendar, cardmemberYear = "cardmember_year" }
 enum MultiplierCondition: String, Codable {
     case bookedViaPortal = "booked_via_portal"            // excluded from ranking by default
@@ -75,6 +78,8 @@ enum MultiplierCondition: String, Codable {
     var hasLocalEdits: Bool         // user edited rates/credits by hand; warn before applying a catalog update
     var issuer: String
     var name: String
+    var shortName: String?          // from catalog; compact display next to issuer
+    var rateUnitOverride: RateUnit? // from catalog card `rateUnit`; nil = use the currency's
     var nickname: String?
     var last4: String?              // display only, optional
     var network: CardNetwork
@@ -85,6 +90,7 @@ enum MultiplierCondition: String, Codable {
     var openedOn: Date?             // needed for cardmember-year credits / fee reminders
     var colorHex: String?
     var isArchived: Bool
+    var sortIndex: Int              // manual wallet order
     @Relationship(deleteRule: .cascade) var multipliers: [Multiplier]
     @Relationship(deleteRule: .cascade) var credits: [Credit]
     @Relationship(deleteRule: .cascade) var categorySelections: [CategorySelection] // user-selectable / rotating activations
@@ -146,8 +152,13 @@ Simple global preferences live in `UserDefaults` via `@AppStorage`:
 | `monthlySummaryEnabled` | `true` | `ReminderScheduler` |
 | `annualFeeReminderEnabled` | `true` | `ReminderScheduler` |
 | `includePortalRates` | `false` | `RecommendationEngine` request |
+| `hasSeenWelcome` | `false` | Onboarding (ON-1) |
+| `catalogLastCheckedAt` | none | Settings shows when the catalog was last checked |
+| `catalogLastResult` | none | Settings: "Up to date", "Updated to <version>" or the error |
 
 ### Derived values (not stored)
+
+- **Cardmember-year credit on a card with no `openedOn`**: the period can't be computed, so the credit is **untracked**. It's left out of dashboard totals, no reminders are scheduled, and the UI asks for the card's open date. `CreditPeriodCalculator` returns `nil` for this case.
 
 - **Terms last verified** for a catalog card: looked up in the current catalog by `catalogID` (not copied into `UserCard`).
 

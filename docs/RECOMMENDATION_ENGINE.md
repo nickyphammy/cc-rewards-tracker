@@ -26,7 +26,7 @@ struct RecommendationRequest: Sendable {
 struct CardRecommendation: Sendable {
     let cardID: UUID
     let rate: Decimal                   // e.g. 4 (x) or 3 (%)
-    let isCashBack: Bool                // rewardCurrencyID == "cash" → show "3%", else "4x"
+    let rateUnit: RateUnit              // card override, else the currency's: .percent → "3%", .multiplier → "4x"
     let estimatedEarnings: Decimal?     // cash: amount × rate / 100 dollars; points: amount × rate points
     let caveats: [Caveat]               // condition, cap, hints
     let isTie: Bool
@@ -35,7 +35,8 @@ struct CardRecommendation: Sendable {
 enum Caveat: Sendable {
     case condition(MultiplierCondition)        // shown only, does not affect rank
     case cap(amount: Decimal, period: Period, afterCapRate: Decimal)
-    case betterRateAvailable(rate: Decimal, reason: MultiplierCondition, brand: String?) // portal / activation / brand hint
+    case betterRateAvailable(rate: Decimal, reason: MultiplierCondition, brand: String?, quarter: String?) // portal / activation / brand hint
+    case chooseCategory(rate: Decimal)         // user-selectable row not yet chosen, and this category is eligible
     case dependsOnSpendMix                     // auto-top-category cards
 }
 
@@ -52,7 +53,7 @@ For each card in the wallet:
    - **Rotating rows** apply only if `date` falls in that quarter **and** the user marked the quarter activated.
    - **Portal-only rows** (`condition == .bookedViaPortal`) apply only if `includePortalRates` is on. See [ranking policy](#conditional-multipliers--ranking-policy).
    - **Brand-only rows** (`condition == .brandOnly`, e.g. "3x on Delta purchases") never apply, because a generic flight or hotel purchase isn't that brand.
-   - **User-selectable rows** apply only to the category the user chose.
+   - **User-selectable rows** apply only to the category the user chose. If the user hasn't chosen one and `request.category` is in `eligibleCategories`, add `chooseCategory` ("Choose your 3% category").
    - **Auto-top-category rows** are assumed to apply, with caveat `dependsOnSpendMix`.
    - **Any other condition** (`bookedDirectOrPortal`, `usOnly`, …) does **not** drop the row, because booking direct is an ordinary purchase.
    - If no row is left, fall back to the card's `other` (base) rate.

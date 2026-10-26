@@ -1,31 +1,43 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": 2026102601,
-  "publishedAt": "2026-10-26T00:00:00Z",
+  "catalogVersion": 2026102602,
+  "publishedAt": "2026-10-26T12:00:00Z",
   "currencies": [
     {
       "id": "cash",
-      "name": "Cash Back"
+      "name": "Cash Back",
+      "unitName": "cash back",
+      "rateUnit": "percent"
     },
     {
       "id": "amex_mr",
-      "name": "Amex Membership Rewards"
+      "name": "Amex Membership Rewards",
+      "unitName": "points",
+      "rateUnit": "multiplier"
     },
     {
       "id": "chase_ur",
-      "name": "Chase Ultimate Rewards"
+      "name": "Chase Ultimate Rewards",
+      "unitName": "points",
+      "rateUnit": "multiplier"
     },
     {
       "id": "cap1_miles",
-      "name": "Capital One Miles"
+      "name": "Capital One Miles",
+      "unitName": "miles",
+      "rateUnit": "multiplier"
     },
     {
       "id": "citi_typ",
-      "name": "Citi ThankYou Points"
+      "name": "Citi ThankYou Points",
+      "unitName": "points",
+      "rateUnit": "multiplier"
     },
     {
       "id": "bilt_points",
-      "name": "Bilt Points"
+      "name": "Bilt Points",
+      "unitName": "points",
+      "rateUnit": "multiplier"
     }
   ],
   "cards": [
@@ -34,6 +46,7 @@
       "revision": 1,
       "issuer": "Robinhood",
       "name": "Robinhood Gold Card",
+      "shortName": "Gold Card",
       "network": "visa",
       "annualFee": 0,
       "requiredMembership": {
@@ -64,6 +77,7 @@
       "revision": 1,
       "issuer": "American Express",
       "name": "American Express Classic Green Card",
+      "shortName": "Classic Green",
       "network": "amex",
       "annualFee": 150,
       "requiredMembership": null,
@@ -120,6 +134,7 @@
       "revision": 1,
       "issuer": "American Express",
       "name": "American Express Gold Card",
+      "shortName": "Gold",
       "network": "amex",
       "annualFee": 325,
       "requiredMembership": null,
@@ -215,6 +230,7 @@
       "revision": 1,
       "issuer": "American Express",
       "name": "Blue Cash Everyday Card from American Express",
+      "shortName": "Blue Cash Everyday",
       "network": "amex",
       "annualFee": 0,
       "requiredMembership": null,
@@ -286,6 +302,7 @@
       "revision": 1,
       "issuer": "American Express",
       "name": "Blue Cash Preferred Card from American Express",
+      "shortName": "Blue Cash Preferred",
       "network": "amex",
       "annualFee": 95,
       "requiredMembership": null,
@@ -344,6 +361,7 @@
       "revision": 1,
       "issuer": "American Express",
       "name": "The Platinum Card from American Express",
+      "shortName": "Platinum",
       "network": "amex",
       "annualFee": 895,
       "requiredMembership": null,
@@ -502,6 +520,8 @@
       "revision": 1,
       "issuer": "Chase",
       "name": "Chase Freedom Flex",
+      "shortName": "Freedom Flex",
+      "rateUnit": "percent",
       "network": "mastercard",
       "annualFee": 0,
       "requiredMembership": null,
@@ -577,6 +597,8 @@
       "revision": 1,
       "issuer": "Chase",
       "name": "Chase Freedom Unlimited",
+      "shortName": "Freedom Unlimited",
+      "rateUnit": "percent",
       "network": "visa",
       "annualFee": 0,
       "requiredMembership": null,
@@ -629,6 +651,7 @@
       "revision": 1,
       "issuer": "Chase",
       "name": "Chase Sapphire Preferred",
+      "shortName": "Sapphire Preferred",
       "network": "visa",
       "annualFee": 95,
       "requiredMembership": null,
@@ -763,6 +786,7 @@
       "revision": 1,
       "issuer": "Chase",
       "name": "Chase Sapphire Reserve",
+      "shortName": "Sapphire Reserve",
       "network": "visa",
       "annualFee": 795,
       "requiredMembership": null,
@@ -904,6 +928,7 @@
       "revision": 1,
       "issuer": "Capital One",
       "name": "Capital One Quicksilver Rewards",
+      "shortName": "Quicksilver",
       "network": "discover",
       "annualFee": 0,
       "requiredMembership": null,
@@ -946,6 +971,7 @@
       "revision": 1,
       "issuer": "Capital One",
       "name": "Capital One Savor Rewards",
+      "shortName": "Savor",
       "network": "discover",
       "annualFee": 0,
       "requiredMembership": null,
@@ -1003,6 +1029,7 @@
       "revision": 1,
       "issuer": "Capital One",
       "name": "Capital One Venture Rewards",
+      "shortName": "Venture",
       "network": "discover",
       "annualFee": 95,
       "requiredMembership": null,
@@ -1056,6 +1083,7 @@
       "revision": 1,
       "issuer": "Capital One",
       "name": "Capital One Venture X Rewards",
+      "shortName": "Venture X",
       "network": "visa",
       "annualFee": 395,
       "requiredMembership": null,
@@ -1123,6 +1151,7 @@
       "revision": 1,
       "issuer": "Capital One",
       "name": "Capital One VentureOne Rewards",
+      "shortName": "VentureOne",
       "network": "discover",
       "annualFee": 0,
       "requiredMembership": null,

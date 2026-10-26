@@ -47,11 +47,11 @@ The rest of each issuer's lineup:
   "catalogVersion": 2026102601,   // always increases with each publish (YYYYMMDDnn)
   "publishedAt": "2026-10-26T00:00:00Z",
   "currencies": [
-    { "id": "cash",      "name": "Cash Back" },
-    { "id": "amex_mr",   "name": "Amex Membership Rewards" },
-    { "id": "chase_ur",  "name": "Chase Ultimate Rewards" },
-    { "id": "cap1_miles","name": "Capital One Miles" },
-    { "id": "citi_typ",  "name": "Citi ThankYou Points" }   // non-catalog issuers too, for custom cards
+    { "id": "cash",       "name": "Cash Back",               "unitName": "cash back", "rateUnit": "percent" },
+    { "id": "amex_mr",    "name": "Amex Membership Rewards", "unitName": "points",    "rateUnit": "multiplier" },
+    { "id": "chase_ur",   "name": "Chase Ultimate Rewards",  "unitName": "points",    "rateUnit": "multiplier" },
+    { "id": "cap1_miles", "name": "Capital One Miles",       "unitName": "miles",     "rateUnit": "multiplier" },
+    { "id": "citi_typ",   "name": "Citi ThankYou Points",    "unitName": "points",    "rateUnit": "multiplier" }   // non-catalog issuers too, for custom cards
   ],
   "cards": [
     {
@@ -59,6 +59,8 @@ The rest of each issuer's lineup:
       "revision": 3,                  // bumped whenever this card's terms change
       "issuer": "Example Bank",
       "name": "Example Gold Card",
+      "shortName": "Gold",            // shown next to the issuer in compact UI ("Example Bank · Gold")
+      "rateUnit": null,               // optional override of the currency's rateUnit, e.g. "percent" for Chase Freedom (UR points marketed as % back)
       "network": "amex",              // visa | mastercard | amex | discover
       "annualFee": 250,
       "requiredMembership": null,     // e.g. { "name": "Robinhood Gold", "monthlyFee": 5, "annualFee": 50 }
@@ -166,13 +168,14 @@ Adding a card copies its catalog data into the user's store ([DATA_MODEL.md](DAT
 - `UserCard` stores the `catalogRevision` it was copied from. When the catalog has a higher `revision` for that card, the card shows a **"Terms updated"** badge.
 - The card detail screen shows what changed (rates, credits added, removed or changed) and offers **Apply update**.
 - Applying the update:
-  - Updates `name`, `network`, `annualFee`, the membership fields and `rewardCurrencyID` from the catalog.
+  - Updates `name`, `shortName`, `rateUnit`, `annualFee`, the membership fields and `rewardCurrencyID` from the catalog.
   - Replaces the card's multipliers.
   - Updates catalog credits, matching them by `catalogCreditID` so usage history is kept. The user's own settings on each credit are kept: `isEnrolled`, `remindersEnabled`, `reminderOffsetsDays`.
   - Archives credits that were removed from the catalog. Their history is kept, and their reminders are cancelled.
   - Adds new credits.
   - Never touches credits the user added themselves (`catalogCreditID == nil`).
   - Sets `catalogRevision` to the new revision and resets `hasLocalEdits` to false.
+  - Never changes `network`. The network is a fact about the user's physical card (Capital One cards can be on Visa, Mastercard or Discover), so the user owns it.
 - If the user has hand-edited that card (`hasLocalEdits`), Apply first warns that their edits will be replaced.
 - **Exception:** `rotating` quarter schedules (e.g. Freedom Flex's categories for next quarter) are applied automatically. They are expected every quarter and don't change the card's terms. For each quarter in the catalog, the card's rotating `Multiplier` rows for that quarter are replaced. Quarters already stored but no longer in the catalog are kept. The user still has to mark each quarter as activated.
 - Retired means the issuer no longer takes new applications (e.g. the Amex Classic Green Card since July 2026). Users add cards they already hold, so retired cards stay in Add Card search with a "No longer offered" label, and existing user cards keep working.

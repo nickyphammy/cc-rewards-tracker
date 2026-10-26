@@ -22,6 +22,7 @@ CONDITIONS = {"booked_via_portal", "requires_activation", "booked_direct_or_port
 CREDIT_PERIODS = {"monthly", "quarterly", "semiannual", "annual", "multi_year"}
 CAP_PERIODS = {"monthly", "quarterly", "annual"}
 RESET_BASES = {"calendar", "cardmember_year"}
+RATE_UNITS = {"percent", "multiplier"}
 SNAKE = re.compile(r"^[a-z0-9]+(_[a-z0-9]+)*$")
 QUARTER = re.compile(r"^\d{4}Q[1-4]$")
 DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -93,7 +94,9 @@ def check_card(card, currency_ids, errors):
         errors.append(f"{where}: id must be snake_case")
     if not isinstance(card.get("revision"), int) or card["revision"] < 1:
         errors.append(f"{where}: revision must be an int >= 1")
-    for field in ("issuer", "name"):
+    if "rateUnit" in card and card["rateUnit"] not in RATE_UNITS:
+        errors.append(f"{where}: rateUnit must be one of {sorted(RATE_UNITS)}")
+    for field in ("issuer", "name", "shortName"):
         if not isinstance(card.get(field), str) or not card[field]:
             errors.append(f"{where}: {field} required")
     if card.get("network") not in NETWORKS:
@@ -160,6 +163,9 @@ def validate(catalog, previous=None):
     currency_ids = {c.get("id") for c in currencies if isinstance(c, dict) and c.get("name")}
     if len(currency_ids) != len(currencies):
         errors.append("every currency needs a unique id and a name")
+    for c in currencies:
+        if isinstance(c, dict) and (not c.get("unitName") or c.get("rateUnit") not in RATE_UNITS):
+            errors.append(f"currency {c.get('id')!r}: needs unitName and rateUnit in {sorted(RATE_UNITS)}")
 
     cards = catalog.get("cards")
     if not isinstance(cards, list):
