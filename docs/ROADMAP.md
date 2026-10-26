@@ -3,17 +3,17 @@
 Each milestone ends with something runnable on a device/simulator.
 
 ## M0 — Project setup
-- [ ] Create Xcode project (SwiftUI, SwiftData, iOS 26 deployment target, iPhone only, portrait), `.gitignore` for Xcode
-- [ ] Folder structure from [ARCHITECTURE.md](ARCHITECTURE.md)
-- [ ] Unit test target with Swift Testing; one passing test
-- [ ] Root `TabView` with empty Best Card / Credits / Wallet / Settings tabs, screenshotted on iPhone 17 Pro and iPhone 17 Pro Max simulators
+- [x] Create Xcode project (SwiftUI, SwiftData, iOS 26 deployment target, iPhone only, portrait), `.gitignore` for Xcode
+- [x] Folder structure from [ARCHITECTURE.md](ARCHITECTURE.md)
+- [x] Unit test target with Swift Testing; one passing test
+- [x] Root `TabView` (Best Card + Wallet for now; Credits and Settings tabs are added with M3/M4), screenshotted on iPhone 17 Pro and iPhone 17 Pro Max simulators
 
 ## M1 — Wallet + catalog
-- [ ] `SpendCategory`, `RewardCurrency`, SwiftData models from [DATA_MODEL.md](DATA_MODEL.md)
+- [x] `SpendCategory`, `RewardCurrency`, SwiftData models from [DATA_MODEL.md](DATA_MODEL.md)
 - [x] `catalog/catalog.json` with the Tier 1 cards from [CARD_CATALOG.md](CARD_CATALOG.md) (Robinhood Gold, Amex, Chase, Capital One), terms checked against issuer sites
 - [x] Catalog validation script (`catalog/validate.py`)
-- [ ] Swift decode tests; bundle `catalog/catalog.json` into the app
-- [ ] `CatalogStore` loading the bundled copy (remote fetch comes in M5)
+- [x] Swift decode tests; bundle `catalog/catalog.json` into the app
+- [x] `CatalogStore` loading the bundled copy (remote fetch comes in M5)
 - [ ] Add card from catalog (search), add custom card, edit (hand-editing rates or credits sets `hasLocalEdits`), archive/delete
 - [ ] Card detail screen showing multipliers and credits
 
